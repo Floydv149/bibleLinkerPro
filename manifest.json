@@ -1,7 +1,7 @@
 {
 	"id": "bibleLinkerPro",
 	"name": "Bible linker Pro",
-	"version": "1.4.16",
+	"version": "1.0.0",
 	"minAppVersion": "1.4.16",
 	"description": "This is a sample plugin for Obsidian. This plugin demonstrates some of the capabilities of the Obsidian API.",
 	"author": "Floydv",
