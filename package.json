@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
 	"main": "main.js",
+	"style": "styles.css",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
