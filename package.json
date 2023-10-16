@@ -2,7 +2,7 @@
 	"name": "obsidian-sample-plugin",
 	"version": "1.0.0",
 	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
-	"main": "release/main.js",
+	"main": "Release/main.js",
 	"style": "styles.css",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
