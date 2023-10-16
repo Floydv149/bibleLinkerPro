@@ -8,7 +8,7 @@ import {
 	// PluginSettingTab,
 	// Setting,
 } from "obsidian";
-
+//test
 // Remember to rename these classes and interfaces!
 
 interface MyPluginSettings {
