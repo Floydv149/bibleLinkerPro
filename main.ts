@@ -13,12 +13,14 @@ import {
 
 interface MyPluginSettings {
 	expandBibleBookName: boolean;
+	autoGetLine: boolean;
 	makeBold: boolean;
 	makeItalic: boolean;
 }
 
 const DEFAULT_SETTINGS: Partial<MyPluginSettings> = {
 	expandBibleBookName: false,
+	autoGetLine: false,
 	makeBold: false,
 	makeItalic: false,
 };
@@ -60,7 +62,14 @@ export default class MyPlugin extends Plugin {
 			name: "Convert Bible text to JW Library link",
 			editorCallback: (editor: Editor, view: MarkdownView) => {
 				try {
-					const input = editor.getSelection();
+					let input;
+
+					if (this.settings.autoGetLine) {
+						input = editor.getLine(editor.getCursor().line);
+						editor.setLine(editor.getCursor().line, "");
+					} else {
+						input = editor.getSelection();
+					}
 					const bibleBooksShort = [
 						"ge",
 						"ex",

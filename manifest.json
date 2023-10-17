@@ -1,10 +1,10 @@
 {
 	"id": "Bible linker Pro",
 	"name": "Bible linker Pro",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"minAppVersion": "0.15.0",
 	"description": "This is a plugin that converts Bible texts to JW Library links.",
-	"author": "Floydv",
+	"author": "Floydv149",
 	"authorUrl": "https://floydv.rf.gd",
 	"isDesktopOnly": false
 }

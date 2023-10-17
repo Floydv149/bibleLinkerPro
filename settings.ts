@@ -13,8 +13,10 @@ export class MainSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 
 		containerEl.empty();
-		containerEl.createEl("h1", { text: "Bible linker Pro - Settings" });
-		containerEl.createEl("h2", { text: "Processing" });
+		containerEl.createEl("h1", { text: "Bible linker Pro " });
+		containerEl.createEl("h3", { text: "⚙️ Settings" });
+
+		containerEl.createEl("h4", { text: "Processing" });
 
 		new Setting(containerEl)
 			.setName("Expand Bible Book name")
@@ -29,6 +31,22 @@ export class MainSettingTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
+			.setName("Auto get current line")
+			.setDesc(
+				"Automatically get Bible text from current line the cursor is on."
+			)
+			.addToggle((Boolean) =>
+				Boolean.setValue(this.plugin.settings.autoGetLine).onChange(
+					async (value) => {
+						this.plugin.settings.autoGetLine = value;
+						await this.plugin.saveSettings();
+					}
+				)
+			);
+
+		containerEl.createEl("h4", { text: "Styling" });
+
+		new Setting(containerEl)
 			.setName("Render the link output bold")
 			.setDesc("Shows the output link with bold font-weight.")
 			.addToggle((Boolean) =>
@@ -39,8 +57,6 @@ export class MainSettingTab extends PluginSettingTab {
 					}
 				)
 			);
-
-		containerEl.createEl("h2", { text: "Styling" });
 
 		new Setting(containerEl)
 			.setName("Render the link output italic")
