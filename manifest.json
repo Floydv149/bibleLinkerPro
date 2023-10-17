@@ -1,9 +1,9 @@
 {
 	"id": "bibleLinkerPro",
 	"name": "Bible linker Pro",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"minAppVersion": "0.1.0",
-	"description": "This is a sample plugin for Obsidian. This plugin demonstrates some of the capabilities of the Obsidian API.",
+	"description": "This is a plugin that converts Bible texts to JW Library links.",
 	"author": "Floydv",
 	"authorUrl": "https://floydv.rf.gd",
 	"fundingUrl": "https://floydv.rf.gd",

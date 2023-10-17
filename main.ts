@@ -52,11 +52,9 @@ export default class MyPlugin extends Plugin {
 
 		// This adds an editor command that can perform some operation on the current editor instance
 		this.addCommand({
-			id: "sample-editor-command",
-			name: "Sample editor command",
+			id: "convert-Bible-text-to-JW-Library-link",
+			name: "Convert Bible text to JW Library link",
 			editorCallback: (editor: Editor, view: MarkdownView) => {
-				console.log(editor.getSelection());
-
 				const input = editor.getSelection();
 				const bibleBooks = [
 					"ge",
