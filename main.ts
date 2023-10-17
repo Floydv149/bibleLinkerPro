@@ -1,22 +1,26 @@
+import { MainSettingTab } from "settings";
+
 import {
-	// App,
+	App,
 	Editor,
 	MarkdownView,
-	// Modal,
+	Modal,
 	// Notice,
 	Plugin,
-	// PluginSettingTab,
-	// Setting,
 } from "obsidian";
 
 // Remember to rename these classes and interfaces!
 
 interface MyPluginSettings {
-	mySetting: string;
+	expandBibleBookName: boolean;
+	makeBold: boolean;
+	makeItalic: boolean;
 }
 
-const DEFAULT_SETTINGS: MyPluginSettings = {
-	mySetting: "default",
+const DEFAULT_SETTINGS: Partial<MyPluginSettings> = {
+	expandBibleBookName: false,
+	makeBold: false,
+	makeItalic: false,
 };
 
 export default class MyPlugin extends Plugin {
@@ -55,130 +59,224 @@ export default class MyPlugin extends Plugin {
 			id: "convert-Bible-text-to-JW-Library-link",
 			name: "Convert Bible text to JW Library link",
 			editorCallback: (editor: Editor, view: MarkdownView) => {
-				const input = editor.getSelection();
-				const bibleBooks = [
-					"ge",
-					"ex",
-					"le",
-					"nu",
-					"de",
-					"joz",
-					"re",
-					"ru",
-					"1sa",
-					"2sa",
-					"1kon",
-					"2kon",
-					"1kr",
-					"2kr",
-					"ezr",
-					"ne",
-					"es",
-					"job",
-					"ps",
-					"sp",
-					"pr",
-					"hgl",
-					"jes",
-					"jer",
-					"klg",
-					"ez",
-					"da",
-					"ho",
-					"joë",
-					"am",
-					"ob",
-					"jon",
-					"mi",
-					"na",
-					"hab",
-					"ze",
-					"hag",
-					"za",
-					"mal",
-					"mt",
-					"mr",
-					"lu",
-					"jo",
-					"han",
-					"ro",
-					"1kor",
-					"2kor",
-					"ga",
-					"ef",
-					"fil",
-					"kol",
-					"1th",
-					"2th",
-					"1ti",
-					"2ti",
-					"tit",
-					"flm",
-					"heb",
-					"jak",
-					"1pe",
-					"2pe",
-					"1jo",
-					"2jo",
-					"3 jo",
-					"ju",
-					"opb",
-				];
+				try {
+					const input = editor.getSelection();
+					const bibleBooksShort = [
+						"ge",
+						"ex",
+						"le",
+						"nu",
+						"de",
+						"joz",
+						"re",
+						"ru",
+						"1sa",
+						"2sa",
+						"1kon",
+						"2kon",
+						"1kr",
+						"2kr",
+						"ezr",
+						"ne",
+						"es",
+						"job",
+						"ps",
+						"sp",
+						"pr",
+						"hgl",
+						"jes",
+						"jer",
+						"klg",
+						"ez",
+						"da",
+						"ho",
+						"joë",
+						"am",
+						"ob",
+						"jon",
+						"mi",
+						"na",
+						"hab",
+						"ze",
+						"hag",
+						"za",
+						"mal",
+						"mt",
+						"mr",
+						"lu",
+						"jo",
+						"han",
+						"ro",
+						"1kor",
+						"2kor",
+						"ga",
+						"ef",
+						"fil",
+						"kol",
+						"1th",
+						"2th",
+						"1ti",
+						"2ti",
+						"tit",
+						"flm",
+						"heb",
+						"jak",
+						"1pe",
+						"2pe",
+						"1jo",
+						"2jo",
+						"3 jo",
+						"ju",
+						"opb",
+					];
 
-				let output = "";
-				let context = "";
+					const bibleBooksLong = [
+						"Genesis",
+						"Exodus",
+						"Leviticus",
+						"Numeri",
+						"Deuteronomium",
+						"Jozua",
+						"Rechters",
+						"Ruth",
+						"1 Samuël",
+						"2 Samuël",
+						"1 Koningen",
+						"2 Koningen",
+						"1 Kronieken",
+						"2 Kronieken",
+						"Ezra",
+						"Nehemia",
+						"Esther",
+						"Job",
+						"Psalmen",
+						"Spreuken",
+						"Prediker",
+						"Hooglied",
+						"Jesaja",
+						"Jeremia",
+						"Klaagliederen",
+						"Ezechiël",
+						"Daniël",
+						"Hosea",
+						"Joël",
+						"Amos",
+						"Obadja",
+						"Jona",
+						"Micha",
+						"Nahum",
+						"Habakuk",
+						"Zefanja",
+						"Haggaï",
+						"Zacharia",
+						"Maleachi",
+						"Mattheüs",
+						"Markus",
+						"Lukas",
+						"Johannes",
+						"Handelingen",
+						"Romeinen",
+						"1 Korinthiërs",
+						"2 Korinthiërs",
+						"Galaten",
+						"Efeziërs",
+						"Filippenzen",
+						"Kolossenzen",
+						"1 Thessalonicenzen",
+						"2 Thessalonicenzen",
+						"1 Timotheüs",
+						"2 Timotheüs",
+						"Titus",
+						"Filemon",
+						"Hebreeën",
+						"Jakobus",
+						"1 Petrus",
+						"2 Petrus",
+						"1 Johannes",
+						"2 Johannes",
+						"3 Johannes",
+						"Judas",
+						"Openbaring",
+					];
 
-				const bibleBookQuery = input.split(" ")[0].toLowerCase();
-				console.log(bibleBookQuery);
-				for (let i = 0; i < bibleBooks.length; i++) {
-					if (bibleBookQuery === bibleBooks[i]) {
-						if (i.toString().length == 1) {
-							output += "0" + (i = 1);
-						} else {
-							output += i + 1;
+					let output = "";
+					let context = "";
+					let bibleBookLong;
+
+					const bibleBookQuery = input.split(" ")[0].toLowerCase();
+					for (let i = 0; i < bibleBooksShort.length; i++) {
+						if (bibleBookQuery === bibleBooksShort[i]) {
+							if (i.toString().length == 1) {
+								output += "0" + (i + 1);
+							} else {
+								output += i + 1;
+							}
+							bibleBookLong = bibleBooksLong[i];
+							i = bibleBooksShort.length;
 						}
-						i = bibleBooks.length;
 					}
-				}
 
-				let chapter = input.split(" ")[1];
-				chapter = chapter.split(":")[0];
-				if (chapter.length == 1) {
-					output += "00" + chapter;
-				} else if (chapter.length == 2) {
-					output += "0" + chapter;
-				} else {
-					output += chapter;
-				}
-
-				context += output;
-
-				let verse = input.split(" ")[1];
-				verse = verse.split(":")[1];
-				verse = verse.split("-")[0];
-				if (verse.length == 1) {
-					output += "00" + verse;
-				} else if (verse.length == 2) {
-					output += "0" + verse;
-				} else {
-					output += verse;
-				}
-
-				const verseContinue = input.split("-")[1];
-				if (verseContinue != undefined) {
-					output += "-" + context;
-					if (verseContinue.length == 1) {
-						output += "00" + verseContinue;
-					} else if (verseContinue.length == 2) {
-						output += "0" + verseContinue;
+					let chapter = input.split(" ")[1];
+					chapter = chapter.split(":")[0];
+					if (chapter.length == 1) {
+						output += "00" + chapter;
+					} else if (chapter.length == 2) {
+						output += "0" + chapter;
 					} else {
-						output += verseContinue;
+						output += chapter;
 					}
-				}
 
-				editor.replaceSelection(
-					"[" + input + "](jwlibrary:///finder?bible=" + output + ")"
-				);
+					context += output;
+
+					let verse = input.split(" ")[1];
+					verse = verse.split(":")[1];
+					verse = verse.split("-")[0];
+					if (verse.length == 1) {
+						output += "00" + verse;
+					} else if (verse.length == 2) {
+						output += "0" + verse;
+					} else {
+						output += verse;
+					}
+
+					const verseContinue = input.split("-")[1];
+					if (verseContinue != undefined) {
+						output += "-" + context;
+						if (verseContinue.length == 1) {
+							output += "00" + verseContinue;
+						} else if (verseContinue.length == 2) {
+							output += "0" + verseContinue;
+						} else {
+							output += verseContinue;
+						}
+					}
+
+					let renderOutput;
+
+					if (this.settings.expandBibleBookName) {
+						renderOutput =
+							bibleBookLong + " " + input.split(" ")[1];
+					} else {
+						renderOutput = input;
+					}
+
+					if (this.settings.makeBold) {
+						renderOutput = "**" + renderOutput + "**";
+					}
+					if (this.settings.makeItalic) {
+						renderOutput = "*" + renderOutput + "*";
+					}
+
+					editor.replaceSelection(
+						"[" +
+							renderOutput +
+							"](jwlibrary:///finder?bible=" +
+							output +
+							")"
+					);
+				} catch (error) {
+					new InvalidInputModal(this.app).open();
+				}
 			},
 		});
 		// This adds a complex command that can check whether the current state of the app allows execution of the command
@@ -203,7 +301,7 @@ export default class MyPlugin extends Plugin {
 		// });
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
-		// this.addSettingTab(new SampleSettingTab(this.app, this));
+		this.addSettingTab(new MainSettingTab(this.app, this));
 
 		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
 		// Using this function will automatically remove the event listener when this plugin is disabled.
@@ -232,6 +330,24 @@ export default class MyPlugin extends Plugin {
 	}
 }
 
+class InvalidInputModal extends Modal {
+	constructor(app: App) {
+		super(app);
+	}
+
+	onOpen() {
+		const { contentEl } = this;
+		contentEl.setText(
+			"Invalid Bible text input! Before you execute this command you need to select a valid Bible text like: '1th 1:3-8'."
+		);
+	}
+
+	onClose() {
+		const { contentEl } = this;
+		contentEl.empty();
+	}
+}
+
 // class SampleModal extends Modal {
 // 	constructor(app: App) {
 // 		super(app);
@@ -245,33 +361,5 @@ export default class MyPlugin extends Plugin {
 // 	onClose() {
 // 		const { contentEl } = this;
 // 		contentEl.empty();
-// 	}
-// }
-
-// class SampleSettingTab extends PluginSettingTab {
-// 	plugin: MyPlugin;
-
-// 	constructor(app: App, plugin: MyPlugin) {
-// 		super(app, plugin);
-// 		this.plugin = plugin;
-// 	}
-
-// 	display(): void {
-// 		const { containerEl } = this;
-
-// 		containerEl.empty();
-
-// 		new Setting(containerEl)
-// 			.setName("Setting #1")
-// 			.setDesc("It's a secret")
-// 			.addText((text) =>
-// 				text
-// 					.setPlaceholder("Enter your secret")
-// 					.setValue(this.plugin.settings.mySetting)
-// 					.onChange(async (value) => {
-// 						this.plugin.settings.mySetting = value;
-// 						await this.plugin.saveSettings();
-// 					})
-// 			);
 // 	}
 // }
