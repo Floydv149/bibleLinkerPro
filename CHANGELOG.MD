@@ -1,5 +1,9 @@
 # Bible linker Pro Changelog
 
+## 1.2.1
+
+-   Fixed links to README and CHANGELOG files.
+
 ## 1.2.0
 
 -   Added settings to add prefix and suffix to link output.

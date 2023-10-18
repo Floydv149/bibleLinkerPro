@@ -2,9 +2,19 @@
 
 ## Features
 
+Converts a Bible text to a JW Library link.
+
+E.g.
+
+ge 1:1
+
+=>
+
+`[Genesis 1:1](jwlibrary:///finder?bible=01001001)`
+
 ## Changelog
 
-[Click here to view the changelog.](https://github.com/Floydv149/bibleLinkerPro/blob/77b365e622145f876c07a4afcfb30dac21aa0332/CHANGELOG.md)
+[Click here to view the changelog.](https://github.com/Floydv149/bibleLinkerPro/blob/main/CHANGELOG.md)
 
 ## Roadmap
 

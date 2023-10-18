@@ -18,12 +18,12 @@ export class MainSettingTab extends PluginSettingTab {
 		containerEl.createEl("p", { text: "Created with ❤️ by Floydv149" });
 		containerEl.createEl("a", {
 			text: "Documentation",
-			href: "https://github.com/Floydv149/bibleLinkerPro/blob/77b365e622145f876c07a4afcfb30dac21aa0332/README.md",
+			href: "https://github.com/Floydv149/bibleLinkerPro/blob/main/README.md",
 		});
 		containerEl.createEl("br");
 		containerEl.createEl("a", {
 			text: "Changelog",
-			href: "https://github.com/Floydv149/bibleLinkerPro/blob/77b365e622145f876c07a4afcfb30dac21aa0332/CHANGELOG.md",
+			href: "https://github.com/Floydv149/bibleLinkerPro/blob/main/CHANGELOG.md",
 		});
 
 		containerEl.createEl("hr");
