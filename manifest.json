@@ -5,6 +5,6 @@
 	"minAppVersion": "0.15.0",
 	"description": "This is a plugin that converts Bible texts to JW Library links.",
 	"author": "Floydv149",
-	"authorUrl": "https://floydv.rf.gd/",
+	"authorUrl": "https://floydv.rf.gd",
 	"isDesktopOnly": false
 }
