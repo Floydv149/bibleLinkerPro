@@ -23,7 +23,7 @@ export class MainSettingTab extends PluginSettingTab {
 		containerEl.createEl("br");
 		containerEl.createEl("a", {
 			text: "Changelog",
-			href: "https://github.com/Floydv149/bibleLinkerPro/blob/main/CHANGELOG.md",
+			href: "https://github.com/Floydv149/bibleLinkerPro/blob/main/CHANGELOG.MD",
 		});
 
 		containerEl.createEl("hr");

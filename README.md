@@ -14,7 +14,7 @@ ge 1:1
 
 ## Changelog
 
-[Click here to view the changelog.](https://github.com/Floydv149/bibleLinkerPro/blob/main/CHANGELOG.md)
+[Click here to view the changelog.](https://github.com/Floydv149/bibleLinkerPro/blob/main/CHANGELOG.MD)
 
 ## Roadmap
 

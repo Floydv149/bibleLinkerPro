@@ -1,6 +1,6 @@
 # Bible linker Pro Changelog
 
-## 1.2.1
+## 1.2.1~1.2.2
 
 -   Fixed links to README and CHANGELOG files.
 
