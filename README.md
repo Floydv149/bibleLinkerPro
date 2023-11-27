@@ -1,5 +1,7 @@
 # Bible linker Pro
 
+This is an Obsidian plugin for converting Bible texts to links in markdown.
+
 ## Features
 
 Converts a Bible text to a JW Library link.
@@ -18,5 +20,5 @@ ge 1:1
 
 ## Roadmap
 
--   Possiblilty to add ',' as a verse seperator.
--   Ability to add a command to extend the Bible book name that is not linked to the similar setting.
+-   Support for adding ',' as a verse seperator.
+-   Support for languages other than Dutch.

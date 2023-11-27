@@ -1,10 +1,10 @@
-import MyPlugin from "main";
+import BibleLinkerPro from "main";
 import { App, PluginSettingTab, Setting } from "obsidian";
 
 export class MainSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+	plugin: BibleLinkerPro;
 
-	constructor(app: App, plugin: MyPlugin) {
+	constructor(app: App, plugin: BibleLinkerPro) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
@@ -46,7 +46,7 @@ export class MainSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName("Auto get current line")
 			.setDesc(
-				"Automatically get Bible text from current line the cursor is on."
+				"Automatically get Bible text from current line the cursor is on, if no text is already selected."
 			)
 			.addToggle((Boolean) =>
 				Boolean.setValue(this.plugin.settings.autoGetLine).onChange(
@@ -58,6 +58,31 @@ export class MainSettingTab extends PluginSettingTab {
 			);
 
 		containerEl.createEl("h4", { text: "🖌️ Styling" });
+
+		new Setting(containerEl)
+			.setName("Capitalize first character of Bible book link output")
+			.setDesc("Capitalizes the first character of the link.")
+			.addToggle((Boolean) =>
+				Boolean.setValue(
+					this.plugin.settings.capitalizeFirstCharBibleBookName
+				).onChange(async (value) => {
+					this.plugin.settings.capitalizeFirstCharBibleBookName =
+						value;
+					await this.plugin.saveSettings();
+				})
+			);
+
+		new Setting(containerEl)
+			.setName("Add space between Bible book number and Bible book name")
+			.setDesc("Adds a space between number and book, e.g. '1 Joh'.")
+			.addToggle((Boolean) =>
+				Boolean.setValue(
+					this.plugin.settings.addSpaceAfterBibleBookNumber
+				).onChange(async (value) => {
+					this.plugin.settings.addSpaceAfterBibleBookNumber = value;
+					await this.plugin.saveSettings();
+				})
+			);
 
 		new Setting(containerEl)
 			.setName("Render the link output bold")
@@ -93,7 +118,7 @@ export class MainSettingTab extends PluginSettingTab {
 						this.plugin.settings.linkPrefix = value;
 						await this.plugin.saveSettings();
 					})
-					.setPlaceholder("Prefix here!")
+					.setPlaceholder("Prefix here")
 			);
 
 		new Setting(containerEl)
@@ -106,7 +131,7 @@ export class MainSettingTab extends PluginSettingTab {
 						this.plugin.settings.linkSuffix = value;
 						await this.plugin.saveSettings();
 					})
-					.setPlaceholder("Suffix here!")
+					.setPlaceholder("Suffix here")
 			);
 	}
 }

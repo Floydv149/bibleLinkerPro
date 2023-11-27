@@ -12,10 +12,10 @@ import {
 	// WorkspaceLeaf,
 } from "obsidian";
 
-// Remember to rename these classes and interfaces!
-
-interface MyPluginSettings {
+interface PluginSettings {
 	expandBibleBookName: boolean;
+	capitalizeFirstCharBibleBookName: boolean;
+	addSpaceAfterBibleBookNumber: boolean;
 	autoGetLine: boolean;
 	makeBold: boolean;
 	makeItalic: boolean;
@@ -23,8 +23,10 @@ interface MyPluginSettings {
 	linkSuffix: string;
 }
 
-const DEFAULT_SETTINGS: Partial<MyPluginSettings> = {
-	expandBibleBookName: false,
+const DEFAULT_SETTINGS: Partial<PluginSettings> = {
+	expandBibleBookName: true,
+	capitalizeFirstCharBibleBookName: true,
+	addSpaceAfterBibleBookNumber: true,
 	autoGetLine: false,
 	makeBold: false,
 	makeItalic: false,
@@ -32,15 +34,15 @@ const DEFAULT_SETTINGS: Partial<MyPluginSettings> = {
 	linkSuffix: "",
 };
 
-export default class MyPlugin extends Plugin {
-	settings: MyPluginSettings;
+export default class BibleLinkerPro extends Plugin {
+	settings: PluginSettings;
 
 	async onload() {
 		await this.loadSettings();
 
 		// this.registerView(VIEW_TYPE_EXAMPLE, (leaf) => new ExampleView(leaf));
 
-		// this.addRibbonIcon("dice", "Activate view", () => {
+		// this.addRibbonIcon("canvas", "Activate view", () => {
 		// 	this.activateView();
 		// });
 
@@ -63,167 +65,112 @@ export default class MyPlugin extends Plugin {
 			editor: Editor,
 			view: MarkdownView
 		) => {
+			let input;
 			try {
-				let input;
-
 				if (this.settings.autoGetLine) {
-					input = editor.getLine(editor.getCursor().line);
-					editor.setLine(editor.getCursor().line, "");
+					if (editor.getSelection().length > 0) {
+						input = editor.getSelection();
+					} else {
+						input = editor.getLine(editor.getCursor().line);
+						editor.setLine(editor.getCursor().line, "");
+					}
 				} else {
 					input = editor.getSelection();
 				}
-				const bibleBooksShort = [
-					"ge",
-					"ex",
-					"le",
-					"nu",
-					"de",
-					"joz",
-					"re",
-					"ru",
-					"1sa",
-					"2sa",
-					"1kon",
-					"2kon",
-					"1kr",
-					"2kr",
-					"ezr",
-					"ne",
-					"es",
-					"job",
-					"ps",
-					"sp",
-					"pr",
-					"hgl",
-					"jes",
-					"jer",
-					"klg",
-					"ez",
-					"da",
-					"ho",
-					"joë",
-					"am",
-					"ob",
-					"jon",
-					"mi",
-					"na",
-					"hab",
-					"ze",
-					"hag",
-					"za",
-					"mal",
-					"mt",
-					"mr",
-					"lu",
-					"jo",
-					"han",
-					"ro",
-					"1kor",
-					"2kor",
-					"ga",
-					"ef",
-					"fil",
-					"kol",
-					"1th",
-					"2th",
-					"1ti",
-					"2ti",
-					"tit",
-					"flm",
-					"heb",
-					"jak",
-					"1pe",
-					"2pe",
-					"1jo",
-					"2jo",
-					"3 jo",
-					"ju",
-					"opb",
-				];
 
-				const bibleBooksLong = [
-					"Genesis",
-					"Exodus",
-					"Leviticus",
-					"Numeri",
-					"Deuteronomium",
-					"Jozua",
-					"Rechters",
-					"Ruth",
-					"1 Samuël",
-					"2 Samuël",
-					"1 Koningen",
-					"2 Koningen",
-					"1 Kronieken",
-					"2 Kronieken",
-					"Ezra",
-					"Nehemia",
-					"Esther",
-					"Job",
-					"Psalmen",
-					"Spreuken",
-					"Prediker",
-					"Hooglied",
-					"Jesaja",
-					"Jeremia",
-					"Klaagliederen",
-					"Ezechiël",
-					"Daniël",
-					"Hosea",
-					"Joël",
-					"Amos",
-					"Obadja",
-					"Jona",
-					"Micha",
-					"Nahum",
-					"Habakuk",
-					"Zefanja",
-					"Haggaï",
-					"Zacharia",
-					"Maleachi",
-					"Mattheüs",
-					"Markus",
-					"Lukas",
-					"Johannes",
-					"Handelingen",
-					"Romeinen",
-					"1 Korinthiërs",
-					"2 Korinthiërs",
-					"Galaten",
-					"Efeziërs",
-					"Filippenzen",
-					"Kolossenzen",
-					"1 Thessalonicenzen",
-					"2 Thessalonicenzen",
-					"1 Timotheüs",
-					"2 Timotheüs",
-					"Titus",
-					"Filemon",
-					"Hebreeën",
-					"Jakobus",
-					"1 Petrus",
-					"2 Petrus",
-					"1 Johannes",
-					"2 Johannes",
-					"3 Johannes",
-					"Judas",
-					"Openbaring",
+				input = input.trim();
+
+				const bibleBooks = [
+					["ge", "gen", "genesis"],
+					["ex", "exodus"],
+					["le", "lev", "leviticus"],
+					["nu", "num", "numeri"],
+					["de", "deut", "deuteronomium"],
+					["joz", "jozua"],
+					["re", "recht", "rechters"],
+					["ru", "ruth"],
+					["1sa", "1sam", "1samuël"],
+					["2sa", "2sam", "2samuél"],
+					["1kon", "1koningen"],
+					["2kon", "2koningen"],
+					["1kr", "1kronieken"],
+					["2kr", "2kronieken"],
+					["ezr", "ezra"],
+					["ne", "nehemiah"],
+					["es", "esther"],
+					["job", "job"],
+					["ps", "psalm", "psalmen"],
+					["sp", "spreuken"],
+					["pr", "pred", "prediker"],
+					["hgl", "hooglied"],
+					["jes", "jesaja"],
+					["jer", "jeremia"],
+					["klg", "klaagl", "klaagliederen"],
+					["ez", "ezech", "ezechiël"],
+					["da", "dan", "daniël"],
+					["ho", "hos", "hosea"],
+					["joë", "joël"],
+					["am", "amos"],
+					["ob", "obad", "obadja"],
+					["jon", "jona"],
+					["mi", "micha"],
+					["na", "nah", "nahum"],
+					["hab", "habakuk"],
+					["ze", "zef", "zefanja"],
+					["hag", "haggaï"],
+					["za", "zach", "zacharia"],
+					["mal", "maleachi"],
+					["mt", "matth", "mattheüs"],
+					["mr", "mark", "markus"],
+					["lu", "luk", "lukas"],
+					["jo", "joh", "johannes"],
+					["han", "hand", "handelingen"],
+					["ro", "rom", "romeinen"],
+					["1kor", "1korinthiërs"],
+					["2kor", "2korinthiërs"],
+					["ga", "gal", "galaten"],
+					["ef", "efeziërs"],
+					["fil", "filippenzen"],
+					["kol", "kolossenzen"],
+					["1th", "1thess", "1thessalonicenzen"],
+					["2th", "2thess", "2thessalonicenzen"],
+					["1ti", "1tim", "1timotheüs"],
+					["2ti", "2tim", "2timotheüs"],
+					["tit", "titus"],
+					["flm", "filem", "filemon"],
+					["heb", "hebr", "hebreeën"],
+					["jak", "jakobus"],
+					["1pe", "1petr", "1petrus"],
+					["2pe", "2petr", "2petrus"],
+					["1jo", "1joh", "1johannes"],
+					["2jo", "2joh", "2johannes"],
+					["3jo", "3joh", "3johannes"],
+					["ju", "jud", "judas"],
+					["opb", "openb", "openbaring"],
 				];
 
 				let output = "";
 				let context = "";
 				let bibleBookLong;
+				let bibleBookHasNumber = false;
+
+				if ([1, 2, 3].includes(parseInt(input.substring(0, 1)))) {
+					if (input.substring(1, 2) == " ") {
+						input = input.substring(0, 1) + input.substring(2);
+					}
+					bibleBookHasNumber = true;
+				}
 
 				const bibleBookQuery = input.split(" ")[0].toLowerCase();
-				for (let i = 0; i < bibleBooksShort.length; i++) {
-					if (bibleBookQuery === bibleBooksShort[i]) {
+				for (let i = 0; i < bibleBooks.length; i++) {
+					if (bibleBooks[i].includes(bibleBookQuery)) {
 						if (i.toString().length == 1) {
 							output += "0" + (i + 1);
 						} else {
 							output += i + 1;
 						}
-						bibleBookLong = bibleBooksLong[i];
-						i = bibleBooksShort.length;
+						bibleBookLong = bibleBooks[i][bibleBooks[i].length - 1];
+						i = bibleBooks.length;
 					}
 				}
 
@@ -265,9 +212,50 @@ export default class MyPlugin extends Plugin {
 				let renderOutput;
 
 				if (this.settings.expandBibleBookName) {
-					renderOutput = bibleBookLong + " " + input.split(" ")[1];
+					if (
+						this.settings.addSpaceAfterBibleBookNumber &&
+						bibleBookHasNumber
+					) {
+						renderOutput =
+							bibleBookLong?.substring(0, 1) +
+							" " +
+							bibleBookLong?.slice(1) +
+							" " +
+							input.split(" ")[1];
+					} else {
+						renderOutput =
+							bibleBookLong + " " + input.split(" ")[1];
+					}
 				} else {
-					renderOutput = input;
+					if (
+						this.settings.addSpaceAfterBibleBookNumber &&
+						bibleBookHasNumber
+					) {
+						renderOutput =
+							input.substring(0, 1) + " " + input.slice(1);
+					} else {
+						renderOutput = input;
+					}
+				}
+
+				if (this.settings.capitalizeFirstCharBibleBookName) {
+					if (bibleBookHasNumber) {
+						if (this.settings.addSpaceAfterBibleBookNumber) {
+							renderOutput =
+								renderOutput.substring(0, 2) +
+								renderOutput.charAt(2).toUpperCase() +
+								renderOutput.slice(3);
+						} else {
+							renderOutput =
+								renderOutput.substring(0, 1) +
+								renderOutput.charAt(1).toUpperCase() +
+								renderOutput.slice(2);
+						}
+					} else {
+						renderOutput =
+							renderOutput.charAt(0).toUpperCase() +
+							renderOutput.slice(1);
+					}
 				}
 
 				if (this.settings.makeBold) {
@@ -290,6 +278,12 @@ export default class MyPlugin extends Plugin {
 						")"
 				);
 			} catch (error) {
+				//If an error occurs, replace text with initial input
+				if (input != null) {
+					editor.replaceSelection(input);
+				}
+
+				//Show error modal
 				new InvalidInputModal(this.app).open();
 			}
 		};
@@ -353,7 +347,7 @@ class InvalidInputModal extends Modal {
 	onOpen() {
 		const { contentEl } = this;
 		contentEl.setText(
-			"Invalid Bible text input! Before you execute this command you need to select a valid Bible text like: '1th 1:3-8'."
+			"Invalid Bible text input! Before you execute this command you need to select a valid Bible text like: '1 th 1:3-8'."
 		);
 	}
 
