@@ -21,6 +21,7 @@ interface PluginSettings {
 	makeItalic: boolean;
 	linkPrefix: string;
 	linkSuffix: string;
+	lastVersion: string;
 }
 
 const DEFAULT_SETTINGS: Partial<PluginSettings> = {
@@ -32,6 +33,7 @@ const DEFAULT_SETTINGS: Partial<PluginSettings> = {
 	makeItalic: false,
 	linkPrefix: "",
 	linkSuffix: "",
+	lastVersion: "",
 };
 
 export default class BibleLinkerPro extends Plugin {
@@ -304,6 +306,16 @@ export default class BibleLinkerPro extends Plugin {
 		this.registerInterval(
 			window.setInterval(() => console.log("setInterval"), 5 * 60 * 1000)
 		);
+
+		//Set current plugin version
+		const currentPluginVersion = "1.3.0";
+
+		//Update notes modal
+		if (currentPluginVersion != this.settings.lastVersion) {
+			this.settings.lastVersion = currentPluginVersion;
+			this.saveSettings();
+			new UpdateNotesModal(this.app).open();
+		}
 	}
 
 	onunload() {}
@@ -349,6 +361,34 @@ class InvalidInputModal extends Modal {
 		contentEl.setText(
 			"Invalid Bible text input! Before you execute this command you need to select a valid Bible text like: '1 th 1:3-8'."
 		);
+	}
+
+	onClose() {
+		const { contentEl } = this;
+		contentEl.empty();
+	}
+}
+
+class UpdateNotesModal extends Modal {
+	constructor(app: App) {
+		super(app);
+	}
+
+	onOpen() {
+		const { contentEl } = this;
+
+		contentEl.createEl("h2", {
+			text: "New update Bible linker Pro V.1.3.0",
+		});
+		contentEl.createEl("h3", { text: "What's new?" });
+		contentEl.innerHTML +=
+			"- Better recognition of Bible book names, acronyms and full versions.<br>- Now you can choose whether you want to insert a space between the book number and Bible book name.<br>- If you have the setting to automatically get the current line enabled, and select text and then execute the command to convert the text to a link, the selected text will now be converted instead of the whole line.<br>- Added setting to capitalize the first character of the Bible book link output.<br>- Added setting to automatically add a space between the Bible book number and Bible book name, except for when you've already added one.<br>- Input is now being trimmed, so that unnecessary spaces are removed.<br>- If an error occurs, the initial input is not being removed anymore.<br>- Updated README file.<br><br>";
+		const dismisButton = contentEl.createEl("button", {
+			text: "Dismiss",
+		});
+		dismisButton.addEventListener("click", () => {
+			this.close();
+		});
 	}
 
 	onClose() {

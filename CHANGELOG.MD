@@ -6,9 +6,10 @@
 -   Now you can choose whether you want to insert a space between the book number and Bible book name.
 -   If you have the setting to automatically get the current line enabled, and select text and then execute the command to convert the text to a link, the selected text will now be converted instead of the whole line.
 -   Added setting to capitalize the first character of the Bible book link output.
--   Addes setting to automatically add a space between the Bible book number and Bible book name, except for when you've already added one.
+-   Added setting to automatically add a space between the Bible book number and Bible book name, except for when you've already added one.
 -   Input is now being trimmed, so that unnecessary spaces are removed.
 -   If an error occurs, the initial input is not being removed anymore.
+-   Added "What's new" popup at startup after update.
 -   Updated README file.
 
 ## 1.2.1~1.2.2
