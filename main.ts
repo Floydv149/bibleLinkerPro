@@ -1,5 +1,6 @@
 import { MainSettingTab } from "settings";
 // import { ExampleView, VIEW_TYPE_EXAMPLE } from "ExampleView";
+import * as translations from "translations.json";
 
 import {
 	App,
@@ -13,10 +14,12 @@ import {
 } from "obsidian";
 
 interface PluginSettings {
+	pluginLanguage: string;
 	expandBibleBookName: boolean;
 	capitalizeFirstCharBibleBookName: boolean;
 	addSpaceAfterBibleBookNumber: boolean;
 	autoGetLine: boolean;
+	autoOpenLink: boolean;
 	makeBold: boolean;
 	makeItalic: boolean;
 	linkPrefix: string;
@@ -25,10 +28,12 @@ interface PluginSettings {
 }
 
 const DEFAULT_SETTINGS: Partial<PluginSettings> = {
+	pluginLanguage: "en",
 	expandBibleBookName: true,
 	capitalizeFirstCharBibleBookName: true,
 	addSpaceAfterBibleBookNumber: true,
 	autoGetLine: false,
+	autoOpenLink: false,
 	makeBold: false,
 	makeItalic: false,
 	linkPrefix: "",
@@ -39,6 +44,26 @@ const DEFAULT_SETTINGS: Partial<PluginSettings> = {
 export default class BibleLinkerPro extends Plugin {
 	settings: PluginSettings;
 
+	getTranslation(key: string) {
+		const langBase = this.getLangBase();
+		const attemptTranslating =
+			typeof langBase[key] !== "undefined" ? langBase[key] : undefined;
+		if (typeof attemptTranslating !== "undefined") {
+			return attemptTranslating;
+		}
+		return key;
+	}
+
+	getLangBase(): { [key: string]: string } {
+		const pluginLanguage = this.settings.pluginLanguage;
+		const langBase: { [key: string]: string } =
+			pluginLanguage === "en" || pluginLanguage === "nl"
+				? translations[pluginLanguage]
+				: {};
+
+		return langBase;
+	}
+
 	async onload() {
 		await this.loadSettings();
 
@@ -47,6 +72,8 @@ export default class BibleLinkerPro extends Plugin {
 		// this.addRibbonIcon("canvas", "Activate view", () => {
 		// 	this.activateView();
 		// });
+
+		const errorModal = new ErrorModal(this.app);
 
 		this.registerEvent(
 			this.app.workspace.on(
@@ -82,7 +109,76 @@ export default class BibleLinkerPro extends Plugin {
 
 				input = input.trim();
 
-				const bibleBooks = [
+				const bibleBooksEN = [
+					["ge", "gen", "genesis"],
+					["ex", "exodus"],
+					["le", "lev", "leviticus"],
+					["nu", "num", "numbers"],
+					["de", "deut", "deuteronomy"],
+					["jos", "josh", "joshua"],
+					["jg", "judg", "judges"],
+					["ru", "ruth"],
+					["1sa", "1sam", "1samuel"],
+					["2sa", "2sam", "2samuel"],
+					["1ki", "1kings"],
+					["2ki", "2kings"],
+					["1ch", "1chron", "1chronicles"],
+					["2ch", "2chron", "2chronicles"],
+					["ezr", "ezra"],
+					["ne", "neh", "nehemiah"],
+					["es", "esther"],
+					["job", "job"],
+					["ps", "psalm", "psalmen"],
+					["pr", "prov", "proverbs"],
+					["ec", "eccl", "ecclesiastes"],
+					["ca", "song of sol", "song of solomon"],
+					["isa", "isa", "isaiah"],
+					["jer", "jer", "jeremiah"],
+					["la", "lam", "lamentations"],
+					["eze", "ezek", "ezekiel"],
+					["da", "dan", "daniël"],
+					["ho", "hos", "hosea"],
+					["joe", "joel"],
+					["am", "amos"],
+					["ob", "obad", "obadiah"],
+					["jon", "jonah"],
+					["mic", "mic", "micah"],
+					["na", "nah", "nahum"],
+					["hab", "habakkuk"],
+					["zep", "zeph", "zephaniah"],
+					["hag", "haggaï"],
+					["zec", "zech", "zechariah"],
+					["mal", "malachi"],
+					["mt", "matt", "matthew"],
+					["mr", "mark", "mark"],
+					["lu", "luke"],
+					["joh", "john"],
+					["ac", "acts"],
+					["ro", "rom", "romans"],
+					["1co", "1cor", "1corinthians"],
+					["2co", "2cor", "2corinthians"],
+					["ga", "gal", "galatians"],
+					["eph", "ephesians"],
+					["php", "phil", "philippians"],
+					["col", "kolossenzen", "colossians"],
+					["1th", "1thess", "1thessalonians"],
+					["2th", "2thess", "2thessalonians"],
+					["1ti", "1tim", "1timothy"],
+					["2ti", "2tim", "2timothy"],
+					["tit", "titus"],
+					["phm", "philem", "philemon"],
+					["heb", "hebr", "hebrews"],
+					["jas", "james"],
+					["1pe", "1pet", "1peter"],
+					["2pe", "2pet", "2peter"],
+					["1jo", "1john"],
+					["2jo", "2john"],
+					["3jo", "3john"],
+					["jude", "jude"],
+					["re", "rev", "revelation"],
+				];
+
+				const bibleBooksNL = [
 					["ge", "gen", "genesis"],
 					["ex", "exodus"],
 					["le", "lev", "leviticus"],
@@ -92,7 +188,7 @@ export default class BibleLinkerPro extends Plugin {
 					["re", "recht", "rechters"],
 					["ru", "ruth"],
 					["1sa", "1sam", "1samuël"],
-					["2sa", "2sam", "2samuél"],
+					["2sa", "2sam", "2samuël"],
 					["1kon", "1koningen"],
 					["2kon", "2koningen"],
 					["1kr", "1kronieken"],
@@ -151,7 +247,13 @@ export default class BibleLinkerPro extends Plugin {
 					["opb", "openb", "openbaring"],
 				];
 
-				let output = "";
+				let bibleBooks = bibleBooksEN;
+
+				if (this.settings.pluginLanguage == "nl") {
+					bibleBooks = bibleBooksNL;
+				}
+
+				let linkOutput = "";
 				let context = "";
 				let bibleBookLong;
 				let bibleBookHasNumber = false;
@@ -167,9 +269,9 @@ export default class BibleLinkerPro extends Plugin {
 				for (let i = 0; i < bibleBooks.length; i++) {
 					if (bibleBooks[i].includes(bibleBookQuery)) {
 						if (i.toString().length == 1) {
-							output += "0" + (i + 1);
+							linkOutput += "0" + (i + 1);
 						} else {
-							output += i + 1;
+							linkOutput += i + 1;
 						}
 						bibleBookLong = bibleBooks[i][bibleBooks[i].length - 1];
 						i = bibleBooks.length;
@@ -179,35 +281,48 @@ export default class BibleLinkerPro extends Plugin {
 				let chapter = input.split(" ")[1];
 				chapter = chapter.split(":")[0];
 				if (chapter.length == 1) {
-					output += "00" + chapter;
+					linkOutput += "00" + chapter;
 				} else if (chapter.length == 2) {
-					output += "0" + chapter;
+					linkOutput += "0" + chapter;
 				} else {
-					output += chapter;
+					linkOutput += chapter;
 				}
 
-				context += output;
+				context += linkOutput;
 
 				let verse = input.split(" ")[1];
 				verse = verse.split(":")[1];
-				verse = verse.split("-")[0];
-				if (verse.length == 1) {
-					output += "00" + verse;
-				} else if (verse.length == 2) {
-					output += "0" + verse;
+				if (verse.includes("-")) {
+					verse = verse.split("-")[0];
 				} else {
-					output += verse;
+					verse = verse.split(",")[0];
+				}
+				if (verse.length == 1) {
+					linkOutput += "00" + verse;
+				} else if (verse.length == 2) {
+					linkOutput += "0" + verse;
+				} else {
+					linkOutput += verse;
 				}
 
-				const verseContinue = input.split("-")[1];
+				let verseContinue = "";
+
+				if (input.includes("-")) {
+					verseContinue = input.split("-")[1];
+				} else {
+					verseContinue = input.split(",")[1];
+					if (verseContinue.substring(0, 1) == " ") {
+						verseContinue = verseContinue.substring(1);
+					}
+				}
 				if (verseContinue != undefined) {
-					output += "-" + context;
+					linkOutput += "-" + context;
 					if (verseContinue.length == 1) {
-						output += "00" + verseContinue;
+						linkOutput += "00" + verseContinue;
 					} else if (verseContinue.length == 2) {
-						output += "0" + verseContinue;
+						linkOutput += "0" + verseContinue;
 					} else {
-						output += verseContinue;
+						linkOutput += verseContinue;
 					}
 				}
 
@@ -224,9 +339,15 @@ export default class BibleLinkerPro extends Plugin {
 							bibleBookLong?.slice(1) +
 							" " +
 							input.split(" ")[1];
+						if (input.split(" ")[2]) {
+							renderOutput += " " + input.split(" ")[2];
+						}
 					} else {
 						renderOutput =
 							bibleBookLong + " " + input.split(" ")[1];
+						if (input.split(" ")[2]) {
+							renderOutput += " " + input.split(" ")[2];
+						}
 					}
 				} else {
 					if (
@@ -276,9 +397,13 @@ export default class BibleLinkerPro extends Plugin {
 					"[" +
 						renderOutput +
 						"](jwlibrary:///finder?bible=" +
-						output +
+						linkOutput +
 						")"
 				);
+
+				if (this.settings.autoOpenLink) {
+					window.open("jwlibrary:///finder?bible=" + linkOutput);
+				}
 			} catch (error) {
 				//If an error occurs, replace text with initial input
 				if (input != null) {
@@ -286,7 +411,8 @@ export default class BibleLinkerPro extends Plugin {
 				}
 
 				//Show error modal
-				new InvalidInputModal(this.app).open();
+				errorModal.setText(this.getTranslation("INVALID_INPUT"));
+				errorModal.open();
 			}
 		};
 
@@ -304,11 +430,11 @@ export default class BibleLinkerPro extends Plugin {
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		this.registerInterval(
-			window.setInterval(() => console.log("setInterval"), 5 * 60 * 1000)
+			window.setInterval(() => console.log(), 5 * 60 * 1000)
 		);
 
 		//Set current plugin version
-		const currentPluginVersion = "1.3.0";
+		const currentPluginVersion = "1.5.0";
 
 		//Update notes modal
 		if (currentPluginVersion != this.settings.lastVersion) {
@@ -351,17 +477,21 @@ export default class BibleLinkerPro extends Plugin {
 	}
 }
 
-class InvalidInputModal extends Modal {
+class ErrorModal extends Modal {
+	plugin: BibleLinkerPro;
+
 	constructor(app: App) {
 		super(app);
 	}
 
-	onOpen() {
+	setText(text: string) {
 		const { contentEl } = this;
-		contentEl.setText(
-			"Invalid Bible text input! Before you execute this command you need to select a valid Bible text like: '1 th 1:3-8'."
-		);
+		contentEl.createEl("p", {
+			text: text,
+		});
 	}
+
+	onOpen() {}
 
 	onClose() {
 		const { contentEl } = this;
@@ -378,11 +508,11 @@ class UpdateNotesModal extends Modal {
 		const { contentEl } = this;
 
 		contentEl.createEl("h2", {
-			text: "New update Bible linker Pro V.1.3.0",
+			text: "New update: Bible linker Pro V.1.5.0",
 		});
 		contentEl.createEl("h3", { text: "What's new?" });
 		contentEl.innerHTML +=
-			"- Better recognition of Bible book names, acronyms and full versions.<br>- Now you can choose whether you want to insert a space between the book number and Bible book name.<br>- If you have the setting to automatically get the current line enabled, and select text and then execute the command to convert the text to a link, the selected text will now be converted instead of the whole line.<br>- Added setting to capitalize the first character of the Bible book link output.<br>- Added setting to automatically add a space between the Bible book number and Bible book name, except for when you've already added one.<br>- Input is now being trimmed, so that unnecessary spaces are removed.<br>- If an error occurs, the initial input is not being removed anymore.<br>- Updated README file.<br><br>";
+			"-   Attempt to add this plugin to the community.<br>-   Added setting to change the language of this plugin to either English or Dutch.<br>-   Added setting to automatically open generated links in JW Library.<br>-   Added support for comma's in Bible texts.<br><br>";
 		const dismisButton = contentEl.createEl("button", {
 			text: "Dismiss",
 		});

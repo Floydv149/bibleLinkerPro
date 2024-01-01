@@ -1,5 +1,6 @@
 import BibleLinkerPro from "main";
 import { App, PluginSettingTab, Setting } from "obsidian";
+import * as translations from "translations.json";
 
 export class MainSettingTab extends PluginSettingTab {
 	plugin: BibleLinkerPro;
@@ -9,31 +10,78 @@ export class MainSettingTab extends PluginSettingTab {
 		this.plugin = plugin;
 	}
 
+	getTranslation(key: string) {
+		const langBase = this.getLangBase();
+		const attemptTranslating =
+			typeof langBase[key] !== "undefined" ? langBase[key] : undefined;
+		if (typeof attemptTranslating !== "undefined") {
+			return attemptTranslating;
+		}
+		return key;
+	}
+
+	getLangBase(): { [key: string]: string } {
+		const pluginLanguage = this.plugin.settings.pluginLanguage;
+		const langBase: { [key: string]: string } =
+			pluginLanguage === "en" || pluginLanguage === "nl"
+				? translations[pluginLanguage]
+				: {};
+
+		return langBase;
+	}
+
 	display(): void {
 		const { containerEl } = this;
 
 		containerEl.empty();
 		containerEl.createEl("h1", { text: "Bible linker Pro " });
-		containerEl.createEl("h3", { text: "ℹ️ About" });
-		containerEl.createEl("p", { text: "Created with ❤️ by Floydv149" });
+		containerEl.createEl("h3", {
+			text: "ℹ️ " + this.getTranslation("ABOUT"),
+		});
+		containerEl.createEl("p", {
+			text: this.getTranslation("CREATED_WITH_LOVE") + " Floydv149",
+		});
 		containerEl.createEl("a", {
-			text: "Documentation",
+			text: this.getTranslation("DOCUMENTATION"),
 			href: "https://github.com/Floydv149/bibleLinkerPro/blob/main/README.md",
 		});
 		containerEl.createEl("br");
 		containerEl.createEl("a", {
-			text: "Changelog",
+			text: this.getTranslation("CHANGELOG"),
 			href: "https://github.com/Floydv149/bibleLinkerPro/blob/main/CHANGELOG.MD",
 		});
 
 		containerEl.createEl("hr");
 
-		containerEl.createEl("h3", { text: "⚙️ Settings" });
-		containerEl.createEl("h4", { text: "🧠 Processing" });
+		containerEl.createEl("h3", {
+			text: "⚙️ " + this.getTranslation("SETTINGS"),
+		});
+
+		containerEl.createEl("h4", {
+			text: "🏠 " + this.getTranslation("MAIN"),
+		});
 
 		new Setting(containerEl)
-			.setName("Expand Bible Book name")
-			.setDesc("E.g. 'Ge' => 'Genesis'.")
+			.setName(this.getTranslation("LANGUAGE"))
+			.setDesc("")
+			.addDropdown((String) =>
+				String.addOption("en", "English")
+					.addOption("nl", "Nederlands")
+					.setValue(this.plugin.settings.pluginLanguage)
+					.onChange(async (value) => {
+						this.plugin.settings.pluginLanguage = value;
+						await this.plugin.saveSettings();
+						this.display();
+					})
+			);
+
+		containerEl.createEl("h4", {
+			text: "🧠 " + this.getTranslation("PROCESSING"),
+		});
+
+		new Setting(containerEl)
+			.setName(this.getTranslation("EXPAND_BIBLE_BOOK_NAME"))
+			.setDesc(this.getTranslation("EXPAND_BIBLE_BOOK_NAME_EXAMPLE"))
 			.addToggle((Boolean) =>
 				Boolean.setValue(
 					this.plugin.settings.expandBibleBookName
@@ -44,10 +92,8 @@ export class MainSettingTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("Auto get current line")
-			.setDesc(
-				"Automatically get Bible text from current line the cursor is on, if no text is already selected."
-			)
+			.setName(this.getTranslation("AUTO_GET_CURRENT_LINE"))
+			.setDesc(this.getTranslation("AUTO_GET_CURRENT_LINE_DESC"))
 			.addToggle((Boolean) =>
 				Boolean.setValue(this.plugin.settings.autoGetLine).onChange(
 					async (value) => {
@@ -57,11 +103,25 @@ export class MainSettingTab extends PluginSettingTab {
 				)
 			);
 
-		containerEl.createEl("h4", { text: "🖌️ Styling" });
+		new Setting(containerEl)
+			.setName(this.getTranslation("AUTO_OPEN_LINK"))
+			.setDesc(this.getTranslation("AUTO_OPEN_LINK_DESC"))
+			.addToggle((Boolean) =>
+				Boolean.setValue(this.plugin.settings.autoOpenLink).onChange(
+					async (value) => {
+						this.plugin.settings.autoOpenLink = value;
+						await this.plugin.saveSettings();
+					}
+				)
+			);
+
+		containerEl.createEl("h4", {
+			text: "🖌️ " + this.getTranslation("STYLING"),
+		});
 
 		new Setting(containerEl)
-			.setName("Capitalize first character of Bible book link output")
-			.setDesc("Capitalizes the first character of the link.")
+			.setName(this.getTranslation("CAPITALIZE_FIRST_CHARACTER"))
+			.setDesc(this.getTranslation("CAPITALIZE_FIRST_CHARACTER_DESC"))
 			.addToggle((Boolean) =>
 				Boolean.setValue(
 					this.plugin.settings.capitalizeFirstCharBibleBookName
@@ -73,8 +133,10 @@ export class MainSettingTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("Add space between Bible book number and Bible book name")
-			.setDesc("Adds a space between number and book, e.g. '1 Joh'.")
+			.setName(this.getTranslation("ADD_SPACE_BIBLE_BOOK_NUMBER_NAME"))
+			.setDesc(
+				this.getTranslation("ADD_SPACE_BIBLE_BOOK_NUMBER_NAME_DESC")
+			)
 			.addToggle((Boolean) =>
 				Boolean.setValue(
 					this.plugin.settings.addSpaceAfterBibleBookNumber
@@ -85,8 +147,8 @@ export class MainSettingTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("Render the link output bold")
-			.setDesc("Shows the output link with bold font-weight.")
+			.setName(this.getTranslation("RENDER_LINK_OUTPUT_BOLD"))
+			.setDesc(this.getTranslation("RENDER_LINK_OUTPUT_BOLD_DESC"))
 			.addToggle((Boolean) =>
 				Boolean.setValue(this.plugin.settings.makeBold).onChange(
 					async (value) => {
@@ -97,8 +159,8 @@ export class MainSettingTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("Render the link output italic")
-			.setDesc("Shows the output link with italic font.")
+			.setName(this.getTranslation("RENDER_LINK_OUTPUT_ITALIC"))
+			.setDesc(this.getTranslation("RENDER_LINK_OUTPUT_ITALIC_DESC"))
 			.addToggle((Boolean) =>
 				Boolean.setValue(this.plugin.settings.makeItalic).onChange(
 					async (value) => {
@@ -109,8 +171,8 @@ export class MainSettingTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName("Link prefix")
-			.setDesc("Prefix of the link, e.g. '- '.")
+			.setName(this.getTranslation("LINK_PREFIX"))
+			.setDesc(this.getTranslation("LINK_PREFIX_DESC"))
 			.addText((text) =>
 				text
 					.setValue(this.plugin.settings.linkPrefix)
@@ -118,12 +180,21 @@ export class MainSettingTab extends PluginSettingTab {
 						this.plugin.settings.linkPrefix = value;
 						await this.plugin.saveSettings();
 					})
-					.setPlaceholder("Prefix here")
-			);
+					.setPlaceholder(this.getTranslation("PREFIX_HERE"))
+			)
+			.addExtraButton((b) => {
+				b.setIcon("rotate-ccw")
+					.setTooltip(this.getTranslation("CLEAR_LINK_PREFIX"))
+					.onClick(async () => {
+						this.plugin.settings.linkPrefix = "";
+						await this.plugin.saveSettings();
+						this.display();
+					});
+			});
 
 		new Setting(containerEl)
-			.setName("Link suffix")
-			.setDesc("Prefix of the link, e.g. '!!!'.")
+			.setName(this.getTranslation("LINK_SUFFIX"))
+			.setDesc(this.getTranslation("LINK_SUFFIX_DESC"))
 			.addText((text) =>
 				text
 					.setValue(this.plugin.settings.linkSuffix)
@@ -131,7 +202,16 @@ export class MainSettingTab extends PluginSettingTab {
 						this.plugin.settings.linkSuffix = value;
 						await this.plugin.saveSettings();
 					})
-					.setPlaceholder("Suffix here")
-			);
+					.setPlaceholder(this.getTranslation("SUFFIX_HERE"))
+			)
+			.addExtraButton((b) => {
+				b.setIcon("rotate-ccw")
+					.setTooltip(this.getTranslation("CLEAR_LINK_SUFFIX"))
+					.onClick(async () => {
+						this.plugin.settings.linkSuffix = "";
+						await this.plugin.saveSettings();
+						this.display();
+					});
+			});
 	}
 }

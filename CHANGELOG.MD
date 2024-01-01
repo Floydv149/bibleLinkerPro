@@ -1,5 +1,12 @@
 # Bible linker Pro Changelog
 
+## 1.5.0 - Obsidian community release update
+
+-   Attempt to add this plugin to the community.
+-   Added setting to change the language of this plugin to either English or Dutch.
+-   Added setting to automatically open generated links in JW Library.
+-   Added support for comma's in Bible texts.
+
 ## 1.3.0 - Quality of life improvements update
 
 -   Better recognition of Bible book names, acronyms and full versions.

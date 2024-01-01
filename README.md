@@ -20,5 +20,4 @@ ge 1:1
 
 ## Roadmap
 
--   Support for adding ',' as a verse seperator.
--   Support for languages other than Dutch.
+-   More error messages
