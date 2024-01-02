@@ -511,8 +511,9 @@ class UpdateNotesModal extends Modal {
 			text: "New update: Bible linker Pro V.1.5.0",
 		});
 		contentEl.createEl("h3", { text: "What's new?" });
-		contentEl.innerHTML +=
-			"-   Attempt to add this plugin to the community.<br>-   Added setting to change the language of this plugin to either English or Dutch.<br>-   Added setting to automatically open generated links in JW Library.<br>-   Added support for comma's in Bible texts.<br><br>";
+		contentEl.createEl("p", {
+			text: "-   Attempt to add this plugin to the community.<br>-   Added setting to change the language of this plugin to either English or Dutch.<br>-   Added setting to automatically open generated links in JW Library.<br>-   Added support for comma's in Bible texts.<br><br>",
+		});
 		const dismisButton = contentEl.createEl("button", {
 			text: "Dismiss",
 		});
