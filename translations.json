@@ -29,7 +29,7 @@
 		"SUFFIX_HERE": "Suffix here",
 		"CLEAR_LINK_PREFIX": "Clear link prefix",
 		"CLEAR_LINK_SUFFIX": "Clear link suffix",
-		"INVALID_INPUT": "Invalid Bible text input! Before you execute this command you need to select a valid Bible text like: '1 ge 1:3-8'.",
+		"INVALID_INPUT": "Invalid Bible text input! Before you execute this command you need to select a valid Bible text like: '1 th 1:3-8'.",
 		"AUTO_OPEN_LINK": "Automatically open generated link",
 		"AUTO_OPEN_LINK_DESC": "Automatically opens generated links in JW Library."
 	},
@@ -63,7 +63,7 @@
 		"SUFFIX_HERE": "Suffix hier",
 		"CLEAR_LINK_PREFIX": "Wis link prefix",
 		"CLEAR_LINK_SUFFIX": "Wis link suffix",
-		"INVALID_INPUT": "Ongeldige Bijbeltekst! Voordat je dit commando uitvoert moet je een geldige Bijbeltekst selecteren, zoals: '1 ge 1:3-8'.",
+		"INVALID_INPUT": "Ongeldige Bijbeltekst! Voordat je dit commando uitvoert moet je een geldige Bijbeltekst selecteren, zoals: '1 th 1:3-8'.",
 		"AUTO_OPEN_LINK": "Open een gegenereerde link automatisch",
 		"AUTO_OPEN_LINK_DESC": "Opent de gegenereerde linken automatisch in JW Library."
 	}
