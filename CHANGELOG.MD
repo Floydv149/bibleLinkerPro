@@ -1,5 +1,10 @@
 # Bible linker Pro Changelog
 
+## 1.5.1 - Bug fixes
+
+-   Fixed incorrect text of an error message.
+-   Fixed bug where single verse Bible links could not be generated.
+
 ## 1.5.0 - Obsidian community release update
 
 -   Attempt to add this plugin to the community.
