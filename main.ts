@@ -297,7 +297,7 @@ export default class BibleLinkerPro extends Plugin {
 				verse = verse.split(":")[1];
 				if (verse.includes("-")) {
 					verse = verse.split("-")[0];
-				} else {
+				} else if (input.includes(",")) {
 					verse = verse.split(",")[0];
 				}
 				if (verse.length == 1) {
@@ -318,7 +318,7 @@ export default class BibleLinkerPro extends Plugin {
 						verseContinue = verseContinue.substring(1);
 					}
 				}
-				if (verseContinue != undefined) {
+				if (verseContinue != undefined && verseContinue != "") {
 					linkOutput += "-" + context;
 					if (verseContinue.length == 1) {
 						linkOutput += "00" + verseContinue;
