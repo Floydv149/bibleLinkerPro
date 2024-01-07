@@ -41,6 +41,9 @@ const DEFAULT_SETTINGS: Partial<PluginSettings> = {
 	lastVersion: "",
 };
 
+//Set current plugin version
+const currentPluginVersion = "1.5.1";
+
 export default class BibleLinkerPro extends Plugin {
 	settings: PluginSettings;
 
@@ -433,9 +436,6 @@ export default class BibleLinkerPro extends Plugin {
 			window.setInterval(() => console.log(), 5 * 60 * 1000)
 		);
 
-		//Set current plugin version
-		const currentPluginVersion = "1.5.0";
-
 		//Update notes modal
 		if (currentPluginVersion != this.settings.lastVersion) {
 			this.settings.lastVersion = currentPluginVersion;
@@ -508,12 +508,16 @@ class UpdateNotesModal extends Modal {
 		const { contentEl } = this;
 
 		contentEl.createEl("h2", {
-			text: "New update: Bible linker Pro V.1.5.0",
+			text: "New update: Bible linker Pro V." + currentPluginVersion,
 		});
 		contentEl.createEl("h3", { text: "What's new?" });
 		contentEl.createEl("p", {
-			text: "-   Attempt to add this plugin to the community.<br>-   Added setting to change the language of this plugin to either English or Dutch.<br>-   Added setting to automatically open generated links in JW Library.<br>-   Added support for comma's in Bible texts.<br><br>",
+			text: "-   Fixed incorrect text of an error message.",
 		});
+		contentEl.createEl("p", {
+			text: "-   Fixed bug where single verse Bible links could not be generated.",
+		});
+
 		const dismisButton = contentEl.createEl("button", {
 			text: "Dismiss",
 		});
