@@ -309,7 +309,7 @@ export default class BibleLinkerPro extends Plugin {
 
 				if (input.includes("-")) {
 					verseContinue = input.split("-")[1];
-				} else {
+				} else if (input.includes(",")) {
 					verseContinue = input.split(",")[1];
 					if (verseContinue.substring(0, 1) == " ") {
 						verseContinue = verseContinue.substring(1);
