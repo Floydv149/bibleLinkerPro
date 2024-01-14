@@ -1,5 +1,9 @@
 # Bible linker Pro Changelog
 
+## 1.5.2 Community plugin
+
+-   Fixed code issues in order to be a better candidate for addition to the community plugins.
+
 ## 1.5.1 - Bug fixes
 
 -   Fixed incorrect text of an error message.

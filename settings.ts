@@ -34,10 +34,11 @@ export class MainSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 
 		containerEl.empty();
-		containerEl.createEl("h1", { text: "Bible linker Pro " });
-		containerEl.createEl("h3", {
-			text: "ℹ️ " + this.getTranslation("ABOUT"),
-		});
+
+		new Setting(containerEl)
+			.setName("ℹ️ " + this.getTranslation("ABOUT"))
+			.setHeading();
+
 		containerEl.createEl("p", {
 			text: this.getTranslation("CREATED_WITH_LOVE") + " Floydv149",
 		});
@@ -50,34 +51,26 @@ export class MainSettingTab extends PluginSettingTab {
 			text: this.getTranslation("CHANGELOG"),
 			href: "https://github.com/Floydv149/bibleLinkerPro/blob/main/CHANGELOG.MD",
 		});
+		containerEl.createEl("br");
+		containerEl.createEl("br");
 
-		containerEl.createEl("hr");
-
-		containerEl.createEl("h3", {
-			text: "⚙️ " + this.getTranslation("SETTINGS"),
-		});
-
-		containerEl.createEl("h4", {
-			text: "🏠 " + this.getTranslation("MAIN"),
-		});
+		// new Setting(containerEl)
+		// 	.setName(this.getTranslation("LANGUAGE"))
+		// 	.setDesc("")
+		// 	.addDropdown((String) =>
+		// 		String.addOption("en", "English")
+		// 			.addOption("nl", "Nederlands")
+		// 			.setValue(this.plugin.settings.pluginLanguage)
+		// 			.onChange(async (value) => {
+		// 				this.plugin.settings.pluginLanguage = value;
+		// 				await this.plugin.saveSettings();
+		// 				this.display();
+		// 			})
+		// 	);
 
 		new Setting(containerEl)
-			.setName(this.getTranslation("LANGUAGE"))
-			.setDesc("")
-			.addDropdown((String) =>
-				String.addOption("en", "English")
-					.addOption("nl", "Nederlands")
-					.setValue(this.plugin.settings.pluginLanguage)
-					.onChange(async (value) => {
-						this.plugin.settings.pluginLanguage = value;
-						await this.plugin.saveSettings();
-						this.display();
-					})
-			);
-
-		containerEl.createEl("h4", {
-			text: "🧠 " + this.getTranslation("PROCESSING"),
-		});
+			.setName("🧠 " + this.getTranslation("PROCESSING"))
+			.setHeading();
 
 		new Setting(containerEl)
 			.setName(this.getTranslation("EXPAND_BIBLE_BOOK_NAME"))
@@ -115,9 +108,9 @@ export class MainSettingTab extends PluginSettingTab {
 				)
 			);
 
-		containerEl.createEl("h4", {
-			text: "🖌️ " + this.getTranslation("STYLING"),
-		});
+		new Setting(containerEl)
+			.setName("🖌️ " + this.getTranslation("STYLING"))
+			.setHeading();
 
 		new Setting(containerEl)
 			.setName(this.getTranslation("CAPITALIZE_FIRST_CHARACTER"))

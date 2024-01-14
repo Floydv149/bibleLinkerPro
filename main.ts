@@ -1,6 +1,7 @@
 import { MainSettingTab } from "settings";
 // import { ExampleView, VIEW_TYPE_EXAMPLE } from "ExampleView";
 import * as translations from "translations.json";
+import { moment } from "obsidian";
 
 import {
 	App,
@@ -41,11 +42,11 @@ const DEFAULT_SETTINGS: Partial<PluginSettings> = {
 	lastVersion: "",
 };
 
-//Set current plugin version
-const currentPluginVersion = "1.5.1";
-
 export default class BibleLinkerPro extends Plugin {
 	settings: PluginSettings;
+
+	//Set current plugin version
+	currentPluginVersion = this.manifest.version;
 
 	getTranslation(key: string) {
 		const langBase = this.getLangBase();
@@ -69,6 +70,16 @@ export default class BibleLinkerPro extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
+
+		console.log("Bible linker Pro V." + this.currentPluginVersion);
+
+		if (moment.locale() == "en" || moment.locale() == "nl") {
+			this.settings.pluginLanguage = moment.locale();
+		} else {
+			this.settings.pluginLanguage = "en";
+		}
+
+		await this.saveSettings();
 
 		// this.registerView(VIEW_TYPE_EXAMPLE, (leaf) => new ExampleView(leaf));
 
@@ -431,14 +442,9 @@ export default class BibleLinkerPro extends Plugin {
 		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new MainSettingTab(this.app, this));
 
-		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
-		this.registerInterval(
-			window.setInterval(() => console.log(), 5 * 60 * 1000)
-		);
-
 		//Update notes modal
-		if (currentPluginVersion != this.settings.lastVersion) {
-			this.settings.lastVersion = currentPluginVersion;
+		if (this.currentPluginVersion != this.settings.lastVersion) {
+			this.settings.lastVersion = this.currentPluginVersion;
 			this.saveSettings();
 			new UpdateNotesModal(this.app).open();
 		}
@@ -500,6 +506,8 @@ class ErrorModal extends Modal {
 }
 
 class UpdateNotesModal extends Modal {
+	plugin: BibleLinkerPro;
+
 	constructor(app: App) {
 		super(app);
 	}
@@ -508,14 +516,11 @@ class UpdateNotesModal extends Modal {
 		const { contentEl } = this;
 
 		contentEl.createEl("h2", {
-			text: "New update: Bible linker Pro V." + currentPluginVersion,
+			text: "New update to Bible linker Pro",
 		});
 		contentEl.createEl("h3", { text: "What's new?" });
 		contentEl.createEl("p", {
-			text: "-   Fixed incorrect text of an error message.",
-		});
-		contentEl.createEl("p", {
-			text: "-   Fixed bug where single verse Bible links could not be generated.",
+			text: "-   Fixed code issues in order to be a better candidate for addition to the community plugins.",
 		});
 
 		const dismisButton = contentEl.createEl("button", {
