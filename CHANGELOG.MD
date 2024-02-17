@@ -1,6 +1,10 @@
 # Bible linker Pro Changelog
 
-## 1.5.2 Community plugin
+## 1.5.3 - Custom language support
+
+-   Added support to choose another language for this plugin than your default language.
+
+## 1.5.2 - Community plugin
 
 -   Fixed code issues in order to be a better candidate for addition to the community plugins.
 

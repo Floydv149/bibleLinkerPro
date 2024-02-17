@@ -1,6 +1,6 @@
 {
 	"name": "bible-linker-pro",
-	"version": "1.5.2",
+	"version": "1.5.3",
 	"description": "This is a plugin that converts Bible texts to JW Library links.",
 	"main": "main.js",
 	"style": "styles.css",

@@ -29,7 +29,7 @@ interface PluginSettings {
 }
 
 const DEFAULT_SETTINGS: Partial<PluginSettings> = {
-	pluginLanguage: "en",
+	pluginLanguage: "?",
 	expandBibleBookName: true,
 	capitalizeFirstCharBibleBookName: true,
 	addSpaceAfterBibleBookNumber: true,
@@ -73,10 +73,12 @@ export default class BibleLinkerPro extends Plugin {
 
 		console.log("Bible linker Pro V." + this.currentPluginVersion);
 
-		if (moment.locale() == "en" || moment.locale() == "nl") {
-			this.settings.pluginLanguage = moment.locale();
-		} else {
-			this.settings.pluginLanguage = "en";
+		if (this.settings.pluginLanguage == "?") {
+			if (moment.locale() == "en" || moment.locale() == "nl") {
+				this.settings.pluginLanguage = moment.locale();
+			} else {
+				this.settings.pluginLanguage = "en";
+			}
 		}
 
 		await this.saveSettings();

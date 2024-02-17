@@ -1,6 +1,7 @@
 import BibleLinkerPro from "main";
 import { App, PluginSettingTab, Setting } from "obsidian";
 import * as translations from "translations.json";
+import { moment } from "obsidian";
 
 export class MainSettingTab extends PluginSettingTab {
 	plugin: BibleLinkerPro;
@@ -54,19 +55,36 @@ export class MainSettingTab extends PluginSettingTab {
 		containerEl.createEl("br");
 		containerEl.createEl("br");
 
-		// new Setting(containerEl)
-		// 	.setName(this.getTranslation("LANGUAGE"))
-		// 	.setDesc("")
-		// 	.addDropdown((String) =>
-		// 		String.addOption("en", "English")
-		// 			.addOption("nl", "Nederlands")
-		// 			.setValue(this.plugin.settings.pluginLanguage)
-		// 			.onChange(async (value) => {
-		// 				this.plugin.settings.pluginLanguage = value;
-		// 				await this.plugin.saveSettings();
-		// 				this.display();
-		// 			})
-		// 	);
+		new Setting(containerEl)
+			.setName(this.getTranslation("LANGUAGE"))
+			.setDesc("")
+			.addDropdown((String) =>
+				String.addOption("/", this.getTranslation("SYSTEM"))
+					.addOption("en", "English")
+					.addOption("nl", "Nederlands")
+					.setValue(
+						this.plugin.settings.pluginLanguage != moment.locale()
+							? this.plugin.settings.pluginLanguage
+							: "/"
+					)
+					.onChange(async (value) => {
+						if (value === "/") {
+							if (
+								moment.locale() == "en" ||
+								moment.locale() == "nl"
+							) {
+								this.plugin.settings.pluginLanguage =
+									moment.locale();
+							} else {
+								this.plugin.settings.pluginLanguage = "en";
+							}
+						} else {
+							this.plugin.settings.pluginLanguage = value;
+							await this.plugin.saveSettings();
+						}
+						this.display();
+					})
+			);
 
 		new Setting(containerEl)
 			.setName("🧠 " + this.getTranslation("PROCESSING"))
