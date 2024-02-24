@@ -2,7 +2,7 @@
 
 ## 1.5.4 - Bug fixes
 
--   Fixed a bug that converted 'Psalms' to 'Psalms'.
+-   Fixed a bug that converted 'Psalm' to 'Psalms'.
 
 ## 1.5.3 - Custom language support
 
