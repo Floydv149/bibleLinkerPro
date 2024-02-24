@@ -144,7 +144,7 @@ export default class BibleLinkerPro extends Plugin {
 					["ne", "neh", "nehemiah"],
 					["es", "esther"],
 					["job", "job"],
-					["ps", "psalm", "psalmen"],
+					["ps", "psalms", "psalm"],
 					["pr", "prov", "proverbs"],
 					["ec", "eccl", "ecclesiastes"],
 					["ca", "song of sol", "song of solomon"],
@@ -213,7 +213,7 @@ export default class BibleLinkerPro extends Plugin {
 					["ne", "nehemiah"],
 					["es", "esther"],
 					["job", "job"],
-					["ps", "psalm", "psalmen"],
+					["ps", "psalmen", "psalm"],
 					["sp", "spreuken"],
 					["pr", "pred", "prediker"],
 					["hgl", "hooglied"],
@@ -522,7 +522,7 @@ class UpdateNotesModal extends Modal {
 		});
 		contentEl.createEl("h3", { text: "What's new?" });
 		contentEl.createEl("p", {
-			text: "-   Fixed code issues in order to be a better candidate for addition to the community plugins.",
+			text: "-   Fixed a bug that converted 'Psalms' to 'Psalms'.",
 		});
 
 		const dismisButton = contentEl.createEl("button", {

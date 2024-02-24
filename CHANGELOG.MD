@@ -1,5 +1,9 @@
 # Bible linker Pro Changelog
 
+## 1.5.4 - Bug fixes
+
+-   Fixed a bug that converted 'Psalms' to 'Psalms'.
+
 ## 1.5.3 - Custom language support
 
 -   Added support to choose another language for this plugin than your default language.
