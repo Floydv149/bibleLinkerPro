@@ -36,6 +36,7 @@ var translations_exports = {};
 __export(translations_exports, {
   default: () => translations_default,
   en: () => en,
+  fr: () => fr,
   nl: () => nl
 });
 var en = {
@@ -160,7 +161,7 @@ var MainSettingTab = class extends import_obsidian.PluginSettingTab {
   }
   getLangBase() {
     const pluginLanguage = this.plugin.settings.pluginLanguage;
-    const langBase = pluginLanguage === "en" || pluginLanguage === "nl" ? translations_exports[pluginLanguage] : {};
+    const langBase = (pluginLanguage === "en" || pluginLanguage === "fr" || pluginLanguage === "nl") ? translations_exports[pluginLanguage] : {};
     return langBase;
   }
   display() {
@@ -186,7 +187,7 @@ var MainSettingTab = class extends import_obsidian.PluginSettingTab {
         this.plugin.settings.pluginLanguage != import_obsidian2.moment.locale() ? this.plugin.settings.pluginLanguage : "/"
       ).onChange(async (value) => {
         if (value === "/") {
-          if (import_obsidian2.moment.locale() == "en" || import_obsidian2.moment.locale() == "nl") {
+          if (import_obsidian2.moment.locale() == "en" || import_obsidian2.moment.locale() == "fr" || import_obsidian2.moment.locale() == "nl") {
             this.plugin.settings.pluginLanguage = import_obsidian2.moment.locale();
           } else {
             this.plugin.settings.pluginLanguage = "en";
@@ -317,14 +318,14 @@ var BibleLinkerPro = class extends import_obsidian4.Plugin {
   }
   getLangBase() {
     const pluginLanguage = this.settings.pluginLanguage;
-    const langBase = pluginLanguage === "en" || pluginLanguage === "nl" ? translations_exports[pluginLanguage] : {};
+    const langBase = (pluginLanguage === "en" || pluginLanguage === "fr" || pluginLanguage === "nl") ? translations_exports[pluginLanguage] : {};
     return langBase;
   }
   async onload() {
     await this.loadSettings();
     console.log("Bible linker Pro V." + this.currentPluginVersion);
     if (this.settings.pluginLanguage == "?") {
-      if (import_obsidian3.moment.locale() == "en" || import_obsidian3.moment.locale() == "nl") {
+      if (import_obsidian3.moment.locale() == "en" || import_obsidian3.moment.locale() == "fr" || import_obsidian3.moment.locale() == "nl") {
         this.settings.pluginLanguage = import_obsidian3.moment.locale();
       } else {
         this.settings.pluginLanguage = "en";
