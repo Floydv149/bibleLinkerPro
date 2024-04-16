@@ -1,5 +1,12 @@
 # Bible linker Pro Changelog
 
+## 1.6.0 - More languages
+
+-   Added French By @DarkBuffalo
+-   Added Portuguese (Brasil) from @gutembergmaciel
+-   Improved multiple-language support
+-   Added more documentation to README
+
 ## 1.5.4 - Bug fixes
 
 -   Fixed a bug that converted 'Psalm' to 'Psalms'.

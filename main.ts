@@ -42,6 +42,9 @@ const DEFAULT_SETTINGS: Partial<PluginSettings> = {
 	lastVersion: "",
 };
 
+const translationsTyped: { [key: string]: { [key: string]: string } } =
+	translations;
+
 export default class BibleLinkerPro extends Plugin {
 	settings: PluginSettings;
 
@@ -61,8 +64,8 @@ export default class BibleLinkerPro extends Plugin {
 	getLangBase(): { [key: string]: string } {
 		const pluginLanguage = this.settings.pluginLanguage;
 		const langBase: { [key: string]: string } =
-			pluginLanguage === "en" || pluginLanguage === "nl"
-				? translations[pluginLanguage]
+			translationsTyped.hasOwnProperty(pluginLanguage)
+				? translationsTyped[pluginLanguage]
 				: {};
 
 		return langBase;
@@ -74,7 +77,7 @@ export default class BibleLinkerPro extends Plugin {
 		console.log("Bible linker Pro V." + this.currentPluginVersion);
 
 		if (this.settings.pluginLanguage == "?") {
-			if (moment.locale() == "en" || moment.locale() == "nl") {
+			if (translationsTyped.hasOwnProperty(moment.locale())) {
 				this.settings.pluginLanguage = moment.locale();
 			} else {
 				this.settings.pluginLanguage = "en";
@@ -263,10 +266,152 @@ export default class BibleLinkerPro extends Plugin {
 					["opb", "openb", "openbaring"],
 				];
 
+				const bibleBooksFR = [
+					["ge", "gen", "genèse"],
+					["ex", "exode"],
+					["lv", "lev", "lévitique"],
+					["nb", "nomb", "nombres"],
+					["dt", "deut", "deuteronome"],
+					["jos", "jos", "josué"],
+					["jg", "juges"],
+					["ru", "ruth"],
+					["1s", "1sam", "1samuel"],
+					["2s", "2sam", "2samuel"],
+					["1r", "1rois"],
+					["2r", "2rois"],
+					["1ch", "1chron", "1chroniques"],
+					["2ch", "2chron", "2chroniques"],
+					["esd", "esdras"],
+					["ne", "neh", "néhémie"],
+					["est", "esther"],
+					["jb", "job"],
+					["ps", "psaumes"],
+					["pr", "prov", "proverbes"],
+					["ec", "eccl", "ecclésiaste"],
+					["ct", "chant de S", "Chant de Salomon"],
+					["is", "isïe"],
+					["jr", "jer", "jérémie"],
+					["la", "lam", "lamentations"],
+					["ez", "ezech", "ézechiel"],
+					["da", "dan", "daniel"],
+					["os", "osée"],
+					["jl", "joël"],
+					["am", "amos"],
+					["ab", "abd", "abdias"],
+					["jon", "jonas"],
+					["mi", "mich", "michée"],
+					["na", "nah", "nahum"],
+					["hab", "habacuc"],
+					["sph", "soph", "sophonie"],
+					["ag", "agg", "aggée"],
+					["za", "zach", "zacharie"],
+					["ml", "mal", "malachie"],
+					["mt", "mat", "matthieu"],
+					["mc", "marc"],
+					["lc", "luc"],
+					["jean", "jean"],
+					["ac", "actes"],
+					["rm", "rom", "romains"],
+					["1co", "1cor", "1corinthiens"],
+					["2co", "2cor", "2corinthiens"],
+					["ga", "gal", "galate"],
+					["eph", "éphesiens"],
+					["php", "phil", "philippiens"],
+					["col", "colossiens"],
+					["1th", "1thess", "1thessaloniciens"],
+					["2th", "2thess", "2thessaloniciens"],
+					["1tm", "1tim", "1timothée"],
+					["2tm", "2tim", "2timothée"],
+					["tt", "tite"],
+					["phm", "philem", "philemon"],
+					["he", "heb", "hébreux"],
+					["jc", "jacq", "jacques"],
+					["1p", "1pierre"],
+					["2p", "2pierre"],
+					["1j", "1jean"],
+					["2j", "2jean"],
+					["3j", "3jean"],
+					["jude", "jude"],
+					["re", "rev", "révélation"],
+				];
+
+				const bibleBooksPtBr = [
+					["gên", "gênesis"],
+					["êx", "êxo", "êxodo"],
+					["le", "lev", "levítico"],
+					["n", "núm", "números"],
+					["de", "deu", "deuteronômio"],
+					["jos", "josué"],
+					["jz", "juí", "juízes"],
+					["ru", "rute"],
+					["1sa", "1sam", "1samuel"],
+					["2sa", "2sam", "2samuel"],
+					["1rs", "1reis"],
+					["2rs", "2reis"],
+					["1cr", "1crô", "1crônicas"],
+					["2cr", "2crô", "2crônicas"],
+					["esd", "esd", "esdras"],
+					["ne", "nee", "neemias"],
+					["est", "ester"],
+					["jó"],
+					["sal", "salmos"],
+					["pr", "pro", "provérbios"],
+					["ec", "ecl", "eclesiastes"],
+					["cân", "cântico de salomão"],
+					["is", "isa", "isaías"],
+					["je", "jer", "jeremias"],
+					["la", "lam", "lamentações"],
+					["ez", "eze", "ezequiel"],
+					["da", "dan", "daniel"],
+					["os", "ose", "oseias"],
+					["jl", "joel"],
+					["am", "amós"],
+					["ob", "obd", "obadias"],
+					["jon", "jonas"],
+					["miq", "miq", "miqueias"],
+					["na", "naum"],
+					["hab", "habacuque"],
+					["sof", "sofonias"],
+					["ag", "ageu"],
+					["za", "zac", "zacarias"],
+					["mal", "malaquias"],
+					["mt", "mat", "mateus"],
+					["mr", "mar", "marcos"],
+					["lu", "luc", "lucas"],
+					["jo", "joão"],
+					["at", "atos"],
+					["ro", "rom", "romanos"],
+					["1co", "1cor", "1coríntios"],
+					["2co", "2cor", "2coríntios"],
+					["gál", "gálatas"],
+					["ef", "efé", "efésios"],
+					["fil", "filipenses"],
+					["col", "colossenses"],
+					["1te", "1tes", "1tessalonicenses"],
+					["2te", "2tes", "2tessalonicenses"],
+					["1ti", "1tim", "1timóteo"],
+					["2ti", "2tim", "2timóteo"],
+					["tit", "tito"],
+					["flm", "filêm", "filêmon"],
+					["he", "heb", "hebreus"],
+					["tg", "tia", "tiago"],
+					["1pe", "1ped", "1pedro"],
+					["2pe", "2ped", "2pedro"],
+					["1jo", "1joão"],
+					["2jo", "2joão"],
+					["3jo", "3joão"],
+					["ju", "judas"],
+					["ap", "apo", "apocalipse"],
+				];
+
 				let bibleBooks = bibleBooksEN;
 
 				if (this.settings.pluginLanguage == "nl") {
 					bibleBooks = bibleBooksNL;
+				} else if (this.settings.pluginLanguage == "fr") {
+					bibleBooks = bibleBooksFR;
+				} else if (this.settings.pluginLanguage == "pt-br") {
+					bibleBooks = bibleBooksPtBr;
 				}
 
 				let linkOutput = "";
@@ -522,7 +667,16 @@ class UpdateNotesModal extends Modal {
 		});
 		contentEl.createEl("h3", { text: "What's new?" });
 		contentEl.createEl("p", {
-			text: "-   Fixed a bug that converted 'Psalms' to 'Psalms'.",
+			text: "-   Added French By @DarkBuffalo",
+		});
+		contentEl.createEl("p", {
+			text: "-   Added Portuguese (Brasil) from @gutembergmaciel",
+		});
+		contentEl.createEl("p", {
+			text: "-   Improved multiple-language support",
+		});
+		contentEl.createEl("p", {
+			text: "-   Added more documentation to README",
 		});
 
 		const dismisButton = contentEl.createEl("button", {
