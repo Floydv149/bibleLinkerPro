@@ -429,7 +429,7 @@ export default class BibleLinkerPro extends Plugin {
 				const bibleBookQuery = input.split(" ")[0].toLowerCase();
 				for (let i = 0; i < bibleBooks.length; i++) {
 					if (bibleBooks[i].includes(bibleBookQuery)) {
-						if (i.toString().length == 1) {
+						if ((i + 1).toString().length == 1) {
 							linkOutput += "0" + (i + 1);
 						} else {
 							linkOutput += i + 1;
