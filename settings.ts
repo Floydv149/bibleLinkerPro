@@ -3,6 +3,9 @@ import { App, PluginSettingTab, Setting } from "obsidian";
 import * as translations from "translations.json";
 import { moment } from "obsidian";
 
+const translationsTyped: { [key: string]: { [key: string]: string } } =
+	translations;
+
 export class MainSettingTab extends PluginSettingTab {
 	plugin: BibleLinkerPro;
 
@@ -24,8 +27,8 @@ export class MainSettingTab extends PluginSettingTab {
 	getLangBase(): { [key: string]: string } {
 		const pluginLanguage = this.plugin.settings.pluginLanguage;
 		const langBase: { [key: string]: string } =
-			pluginLanguage === "en" || pluginLanguage === "nl"
-				? translations[pluginLanguage]
+			translationsTyped.hasOwnProperty(pluginLanguage)
+				? translationsTyped[pluginLanguage]
 				: {};
 
 		return langBase;
@@ -61,6 +64,7 @@ export class MainSettingTab extends PluginSettingTab {
 			.addDropdown((String) =>
 				String.addOption("/", this.getTranslation("SYSTEM"))
 					.addOption("en", "English")
+					.addOption("fr", "Frans")
 					.addOption("nl", "Nederlands")
 					.setValue(
 						this.plugin.settings.pluginLanguage != moment.locale()
@@ -70,8 +74,9 @@ export class MainSettingTab extends PluginSettingTab {
 					.onChange(async (value) => {
 						if (value === "/") {
 							if (
-								moment.locale() == "en" ||
-								moment.locale() == "nl"
+								translationsTyped.hasOwnProperty(
+									moment.locale()
+								)
 							) {
 								this.plugin.settings.pluginLanguage =
 									moment.locale();
