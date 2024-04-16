@@ -1,5 +1,9 @@
 # Bible linker Pro Changelog
 
+## 1.6.1 - Hotfix
+
+-   Fixed an issue with bible book 'Samuel' being added a zero to in the link, breaking the link output.
+
 ## 1.6.0 - More languages
 
 -   Added French By @DarkBuffalo
