@@ -77,7 +77,7 @@ export default class BibleLinkerPro extends Plugin {
 		console.log("Bible linker Pro V." + this.currentPluginVersion);
 
 		if (this.settings.pluginLanguage == "?") {
-			if (translations.hasOwnProperty(moment.locale())) {
+			if (translationsTyped.hasOwnProperty(moment.locale())) {
 				this.settings.pluginLanguage = moment.locale();
 			} else {
 				this.settings.pluginLanguage = "en";
@@ -667,7 +667,16 @@ class UpdateNotesModal extends Modal {
 		});
 		contentEl.createEl("h3", { text: "What's new?" });
 		contentEl.createEl("p", {
-			text: "-   Fixed a bug that converted 'Psalms' to 'Psalms'.",
+			text: "-   Added French By @DarkBuffalo",
+		});
+		contentEl.createEl("p", {
+			text: "-   Added Portuguese (Brasil) from @gutembergmaciel",
+		});
+		contentEl.createEl("p", {
+			text: "-   Improved multiple-language support",
+		});
+		contentEl.createEl("p", {
+			text: "-   Added more documentation to README",
 		});
 
 		const dismisButton = contentEl.createEl("button", {
