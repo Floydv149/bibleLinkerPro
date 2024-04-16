@@ -64,8 +64,9 @@ export class MainSettingTab extends PluginSettingTab {
 			.addDropdown((String) =>
 				String.addOption("/", this.getTranslation("SYSTEM"))
 					.addOption("en", "English")
-					.addOption("fr", "Frans")
+					.addOption("fr", "Français")
 					.addOption("nl", "Nederlands")
+					.addOption("pt-br", "Português (Brasil)")
 					.setValue(
 						this.plugin.settings.pluginLanguage != moment.locale()
 							? this.plugin.settings.pluginLanguage

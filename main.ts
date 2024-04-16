@@ -335,12 +335,83 @@ export default class BibleLinkerPro extends Plugin {
 					["re", "rev", "révélation"],
 				];
 
+				const bibleBooksPtBr = [
+					["gên", "gênesis"],
+					["êx", "êxo", "êxodo"],
+					["le", "lev", "levítico"],
+					["n", "núm", "números"],
+					["de", "deu", "deuteronômio"],
+					["jos", "josué"],
+					["jz", "juí", "juízes"],
+					["ru", "rute"],
+					["1sa", "1sam", "1samuel"],
+					["2sa", "2sam", "2samuel"],
+					["1rs", "1reis"],
+					["2rs", "2reis"],
+					["1cr", "1crô", "1crônicas"],
+					["2cr", "2crô", "2crônicas"],
+					["esd", "esd", "esdras"],
+					["ne", "nee", "neemias"],
+					["est", "ester"],
+					["jó"],
+					["sal", "salmos"],
+					["pr", "pro", "provérbios"],
+					["ec", "ecl", "eclesiastes"],
+					["cân", "cântico de salomão"],
+					["is", "isa", "isaías"],
+					["je", "jer", "jeremias"],
+					["la", "lam", "lamentações"],
+					["ez", "eze", "ezequiel"],
+					["da", "dan", "daniel"],
+					["os", "ose", "oseias"],
+					["jl", "joel"],
+					["am", "amós"],
+					["ob", "obd", "obadias"],
+					["jon", "jonas"],
+					["miq", "miq", "miqueias"],
+					["na", "naum"],
+					["hab", "habacuque"],
+					["sof", "sofonias"],
+					["ag", "ageu"],
+					["za", "zac", "zacarias"],
+					["mal", "malaquias"],
+					["mt", "mat", "mateus"],
+					["mr", "mar", "marcos"],
+					["lu", "luc", "lucas"],
+					["jo", "joão"],
+					["at", "atos"],
+					["ro", "rom", "romanos"],
+					["1co", "1cor", "1coríntios"],
+					["2co", "2cor", "2coríntios"],
+					["gál", "gálatas"],
+					["ef", "efé", "efésios"],
+					["fil", "filipenses"],
+					["col", "colossenses"],
+					["1te", "1tes", "1tessalonicenses"],
+					["2te", "2tes", "2tessalonicenses"],
+					["1ti", "1tim", "1timóteo"],
+					["2ti", "2tim", "2timóteo"],
+					["tit", "tito"],
+					["flm", "filêm", "filêmon"],
+					["he", "heb", "hebreus"],
+					["tg", "tia", "tiago"],
+					["1pe", "1ped", "1pedro"],
+					["2pe", "2ped", "2pedro"],
+					["1jo", "1joão"],
+					["2jo", "2joão"],
+					["3jo", "3joão"],
+					["ju", "judas"],
+					["ap", "apo", "apocalipse"],
+				];
+
 				let bibleBooks = bibleBooksEN;
 
 				if (this.settings.pluginLanguage == "nl") {
 					bibleBooks = bibleBooksNL;
 				} else if (this.settings.pluginLanguage == "fr") {
 					bibleBooks = bibleBooksFR;
+				} else if (this.settings.pluginLanguage == "pt-br") {
+					bibleBooks = bibleBooksPtBr;
 				}
 
 				let linkOutput = "";
