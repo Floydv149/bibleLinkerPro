@@ -678,6 +678,9 @@ class UpdateNotesModal extends Modal {
 		contentEl.createEl("p", {
 			text: "-   Added more documentation to README",
 		});
+		contentEl.createEl("p", {
+			text: "-   Fixed an issue with bible book 'Samuel' being added a zero to in the link, breaking the link output.",
+		});
 
 		const dismisButton = contentEl.createEl("button", {
 			text: "Dismiss",
