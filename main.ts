@@ -404,6 +404,75 @@ export default class BibleLinkerPro extends Plugin {
 					["ap", "apo", "apocalipse"],
 				];
 
+				const bibleBooksDE = [
+					["1mo", "1mose"],
+					["2mo", "2mose"],
+					["3mo", "3mose"],
+					["4mo", "4mose"],
+					["5mo", "5mose"],
+					["jos", "josua"],
+					["ri", "richter"],
+					["ru", "ruth"],
+					["1sam", "1samuel"],
+					["2sam", "2samuel"],
+					["1kö", "1könige"],
+					["2kö", "2könige"],
+					["1chr", "1chronika"],
+					["2chr", "2chronika"],
+					["es", "esra"],
+					["neh", "nehemia"],
+					["esth", "esther"],
+					["hi", "hiob"],
+					["ps", "psalmen"],
+					["spr", "sprüche"],
+					["pred", "prediger"],
+					["hoh", "hohes lied"],
+					["jes", "jesaja"],
+					["jer", "jeremia"],
+					["klag", "klagelieder"],
+					["hes", "hesekiel"],
+					["dan", "daniel"],
+					["hos", "hosea"],
+					["joe", "joel"],
+					["am", "amos"],
+					["ob", "obadja"],
+					["jon", "jona"],
+					["mi", "micha"],
+					["nah", "nahum"],
+					["hab", "habakuk"],
+					["zeph", "zephanja"],
+					["hag", "haggai"],
+					["sach", "sacharja"],
+					["mal", "maleachi"],
+					["mat", "matthäus"],
+					["mar", "markus"],
+					["luk", "lukas"],
+					["joh", "johannes"],
+					["apg", "apostelgeschichte"],
+					["röm", "römer"],
+					["1kor", "1korinther"],
+					["2kor", "2korinther"],
+					["gal", "galater"],
+					["eph", "epheser"],
+					["phil", "philipper"],
+					["kol", "kolosser"],
+					["1thes", "1thessalonicher"],
+					["2thes", "2thessalonicher"],
+					["1tim", "1timotheus"],
+					["2tim", "2timotheus"],
+					["tit", "titus"],
+					["phi", "philem", "philemon"],
+					["heb", "hebräer"],
+					["jak", "jakobus"],
+					["1pet", "1petrus"],
+					["2pet", "2petrus"],
+					["1joh", "1johannes"],
+					["2joh", "2johannes"],
+					["3joh", "3johannes"],
+					["jud", "judas"],
+					["offb", "offenbarung"],
+				];
+
 				let bibleBooks = bibleBooksEN;
 
 				if (this.settings.pluginLanguage == "nl") {
@@ -412,6 +481,8 @@ export default class BibleLinkerPro extends Plugin {
 					bibleBooks = bibleBooksFR;
 				} else if (this.settings.pluginLanguage == "pt-br") {
 					bibleBooks = bibleBooksPtBr;
+				} else if (this.settings.pluginLanguage == "de") {
+					bibleBooks = bibleBooksDE;
 				}
 
 				let linkOutput = "";
@@ -419,7 +490,7 @@ export default class BibleLinkerPro extends Plugin {
 				let bibleBookLong;
 				let bibleBookHasNumber = false;
 
-				if ([1, 2, 3].includes(parseInt(input.substring(0, 1)))) {
+				if ([1, 2, 3, 4, 5].includes(parseInt(input.substring(0, 1)))) {
 					if (input.substring(1, 2) == " ") {
 						input = input.substring(0, 1) + input.substring(2);
 					}
@@ -667,19 +738,7 @@ class UpdateNotesModal extends Modal {
 		});
 		contentEl.createEl("h3", { text: "What's new?" });
 		contentEl.createEl("p", {
-			text: "-   Added French By @DarkBuffalo",
-		});
-		contentEl.createEl("p", {
-			text: "-   Added Portuguese (Brasil) from @gutembergmaciel",
-		});
-		contentEl.createEl("p", {
-			text: "-   Improved multiple-language support",
-		});
-		contentEl.createEl("p", {
-			text: "-   Added more documentation to README",
-		});
-		contentEl.createEl("p", {
-			text: "-   Fixed an issue with bible book 'Samuel' being added a zero to in the link, breaking the link output.",
+			text: "-   Added German By @Juilio",
 		});
 
 		const dismisButton = contentEl.createEl("button", {

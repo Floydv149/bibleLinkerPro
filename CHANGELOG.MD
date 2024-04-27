@@ -1,13 +1,17 @@
 # Bible linker Pro Changelog
 
+## 1.6.2 - German
+
+-   Added German By @Juilio
+
 ## 1.6.1 - Hotfix
 
 -   Fixed an issue with bible book 'Samuel' being added a zero to in the link, breaking the link output.
 
 ## 1.6.0 - More languages
 
--   Added French By @DarkBuffalo
--   Added Portuguese (Brasil) from @gutembergmaciel
+-   Added French by @DarkBuffalo
+-   Added Portuguese (Brasil) by @gutembergmaciel
 -   Improved multiple-language support
 -   Added more documentation to README
 

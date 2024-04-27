@@ -66,6 +66,7 @@ export class MainSettingTab extends PluginSettingTab {
 					.addOption("en", "English")
 					.addOption("fr", "Français")
 					.addOption("nl", "Nederlands")
+					.addOption("de", "Deutsch")
 					.addOption("pt-br", "Português (Brasil)")
 					.setValue(
 						this.plugin.settings.pluginLanguage != moment.locale()

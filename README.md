@@ -41,6 +41,7 @@ This plugin converts the following languages:
 -   Dutch (100%)
 -   French (100%) - By @DarkBuffalo
 -   Portuguese from Brasil (100%) - By @gutembergmaciel
+-   German (100%) - By @Juilio
 
 ## Changelog
 
