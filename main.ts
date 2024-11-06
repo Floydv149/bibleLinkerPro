@@ -551,6 +551,8 @@ export default class BibleLinkerPro extends Plugin {
 					bibleBooks = bibleBooksPtBr;
 				} else if (this.settings.pluginLanguage == "de") {
 					bibleBooks = bibleBooksDE;
+				} else if (this.settings.pluginLanguage == "fi") {
+					bibleBooks = bibleBooksFI;
 				}
 
 				let linkOutput = "";
