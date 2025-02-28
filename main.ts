@@ -128,6 +128,7 @@ export default class BibleLinkerPro extends Plugin {
 
 				input = input.trim();
 
+				const wtLocaleEN = "E";
 				const bibleBooksEN = [
 					["ge", "gen", "genesis"],
 					["ex", "exodus"],
@@ -197,6 +198,7 @@ export default class BibleLinkerPro extends Plugin {
 					["re", "rev", "revelation"],
 				];
 
+				const wtLocaleNL = "O";
 				const bibleBooksNL = [
 					["ge", "gen", "genesis"],
 					["ex", "exodus"],
@@ -266,6 +268,7 @@ export default class BibleLinkerPro extends Plugin {
 					["opb", "openb", "openbaring"],
 				];
 
+				const wtLocaleFR = "F";
 				const bibleBooksFR = [
 					["ge", "gen", "genèse"],
 					["ex", "exode"],
@@ -335,6 +338,7 @@ export default class BibleLinkerPro extends Plugin {
 					["re", "rev", "révélation"],
 				];
 
+				const wtLocalePtBr = "T";
 				const bibleBooksPtBr = [
 					["gên", "gênesis"],
 					["êx", "êxo", "êxodo"],
@@ -404,6 +408,7 @@ export default class BibleLinkerPro extends Plugin {
 					["ap", "apo", "apocalipse"],
 				];
 
+				const wtLocaleDE = "X";
 				const bibleBooksDE = [
 					["1mo", "1mose"],
 					["2mo", "2mose"],
@@ -473,15 +478,20 @@ export default class BibleLinkerPro extends Plugin {
 					["offb", "offenbarung"],
 				];
 
+				let wtLocale = wtLocaleEN;
 				let bibleBooks = bibleBooksEN;
 
 				if (this.settings.pluginLanguage == "nl") {
+					wtLocale = wtLocaleNL;
 					bibleBooks = bibleBooksNL;
 				} else if (this.settings.pluginLanguage == "fr") {
+					wtLocale = wtLocaleFR;
 					bibleBooks = bibleBooksFR;
 				} else if (this.settings.pluginLanguage == "pt-br") {
+					wtLocale = wtLocalePtBr;
 					bibleBooks = bibleBooksPtBr;
 				} else if (this.settings.pluginLanguage == "de") {
+					wtLocale = wtLocaleDE
 					bibleBooks = bibleBooksDE;
 				}
 
@@ -625,7 +635,7 @@ export default class BibleLinkerPro extends Plugin {
 					renderOutput +
 					this.settings.linkSuffix;
 
-				const link = `jwlibrary:///finder?srcid=jwlshare&wtlocale=O&prefer=lang&pub=nwtsty&bible=${linkOutput}`;
+				const link = `jwlibrary:///finder?srcid=jwlshare&wtlocale=${wtLocale}&prefer=lang&pub=nwtsty&bible=${linkOutput}`;
 				editor.replaceSelection(
 					"[" +
 						renderOutput +
