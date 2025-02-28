@@ -625,16 +625,17 @@ export default class BibleLinkerPro extends Plugin {
 					renderOutput +
 					this.settings.linkSuffix;
 
+				const link = `jwlibrary:///finder?srcid=jwlshare&wtlocale=O&prefer=lang&pub=nwtsty&bible=${linkOutput}`;
 				editor.replaceSelection(
 					"[" +
 						renderOutput +
-						"](jwlibrary:///finder?bible=" +
-						linkOutput +
+						"](" +
+						link +
 						")"
 				);
 
 				if (this.settings.autoOpenLink) {
-					window.open("jwlibrary:///finder?bible=" + linkOutput);
+					window.open(link);
 				}
 			} catch (error) {
 				//If an error occurs, replace text with initial input
