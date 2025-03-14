@@ -213,7 +213,7 @@ export default class BibleLinkerPro extends Plugin {
 					["1kr", "1kronieken"],
 					["2kr", "2kronieken"],
 					["ezr", "ezra"],
-					["ne", "nehemiah"],
+					["ne", "nehemia"],
 					["es", "esther"],
 					["job", "job"],
 					["ps", "psalmen", "psalm"],
