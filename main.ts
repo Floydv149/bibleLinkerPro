@@ -477,6 +477,8 @@ export default class BibleLinkerPro extends Plugin {
 					["jud", "judas"],
 					["offb", "offenbarung"],
 				];
+
+				const wtLocaleFI = "FI";
 				const bibleBooksFI = [
 					["1mo", "1moos", "1mooseksen"],
 					["2mo", "2moos", "2mooseksen"],
@@ -543,7 +545,7 @@ export default class BibleLinkerPro extends Plugin {
 					["2jo", "2johanneksen"],
 					["3jo", "3johanneksen"],
 					["ju", "juudaksen"],
-					["il", "ilmestys"]
+					["il", "ilmestys"],
 				];
 
 				let wtLocale = wtLocaleEN;
@@ -559,9 +561,10 @@ export default class BibleLinkerPro extends Plugin {
 					wtLocale = wtLocalePtBr;
 					bibleBooks = bibleBooksPtBr;
 				} else if (this.settings.pluginLanguage == "de") {
-					wtLocale = wtLocaleDE
+					wtLocale = wtLocaleDE;
 					bibleBooks = bibleBooksDE;
 				} else if (this.settings.pluginLanguage == "fi") {
+					wtLocale = wtLocaleFI;
 					bibleBooks = bibleBooksFI;
 				}
 
@@ -706,13 +709,7 @@ export default class BibleLinkerPro extends Plugin {
 					this.settings.linkSuffix;
 
 				const link = `jwlibrary:///finder?srcid=jwlshare&wtlocale=${wtLocale}&prefer=lang&pub=nwtsty&bible=${linkOutput}`;
-				editor.replaceSelection(
-					"[" +
-						renderOutput +
-						"](" +
-						link +
-						")"
-				);
+				editor.replaceSelection("[" + renderOutput + "](" + link + ")");
 
 				if (this.settings.autoOpenLink) {
 					window.open(link);
