@@ -200,7 +200,7 @@ export default class BibleLinkerPro extends Plugin {
 
 				const wtLocaleNL = "O";
 				const bibleBooksNL = [
-					["ge", "gen", "genesis"],
+					["gn", "gen", "genesis"],
 					["ex", "exodus"],
 					["le", "lev", "leviticus"],
 					["nu", "num", "numeri"],
