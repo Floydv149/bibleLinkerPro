@@ -136,6 +136,20 @@ export class MainSettingTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
+			.setName(this.getTranslation("BIBLE_EDITION"))
+			.setDesc(this.getTranslation("BIBLE_EDITION_DESC"))
+			.addToggle((Boolean) =>
+				Boolean.setValue(
+					this.plugin.settings.bibleEdition == "nwt" ? false : true
+				).onChange(async (value) => {
+					this.plugin.settings.bibleEdition = value
+						? "nwtsty"
+						: "nwt";
+					await this.plugin.saveSettings();
+				})
+			);
+
+		new Setting(containerEl)
 			.setName("🖌️ " + this.getTranslation("STYLING"))
 			.setHeading();
 

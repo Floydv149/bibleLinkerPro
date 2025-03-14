@@ -16,6 +16,7 @@ import {
 
 interface PluginSettings {
 	pluginLanguage: string;
+	bibleEdition: string;
 	expandBibleBookName: boolean;
 	capitalizeFirstCharBibleBookName: boolean;
 	addSpaceAfterBibleBookNumber: boolean;
@@ -30,6 +31,7 @@ interface PluginSettings {
 
 const DEFAULT_SETTINGS: Partial<PluginSettings> = {
 	pluginLanguage: "?",
+	bibleEdition: "nwtsty",
 	expandBibleBookName: true,
 	capitalizeFirstCharBibleBookName: true,
 	addSpaceAfterBibleBookNumber: true,
@@ -789,7 +791,7 @@ export default class BibleLinkerPro extends Plugin {
 					renderOutput +
 					this.settings.linkSuffix;
 
-				const link = `jwlibrary:///finder?srcid=jwlshare&wtlocale=${wtLocale}&prefer=lang&pub=nwtsty&bible=${linkOutput}`;
+				const link = `jwlibrary:///finder?srcid=jwlshare&wtlocale=${wtLocale}&prefer=lang&pub=${this.settings.bibleEdition}&bible=${linkOutput}`;
 				editor.replaceSelection("[" + renderOutput + "](" + link + ")");
 
 				if (this.settings.autoOpenLink) {
