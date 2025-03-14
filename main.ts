@@ -156,7 +156,7 @@ export default class BibleLinkerPro extends Plugin {
 					["jer", "jer", "jeremiah"],
 					["la", "lam", "lamentations"],
 					["eze", "ezek", "ezekiel"],
-					["da", "dan", "daniël"],
+					["da", "dan", "daniel"],
 					["ho", "hos", "hosea"],
 					["joe", "joel"],
 					["am", "amos"],
@@ -477,7 +477,7 @@ export default class BibleLinkerPro extends Plugin {
 					["jud", "judas"],
 					["offb", "offenbarung"],
 				];
-        
+
 				const bibleBooksES = [
 					["ge", "gen", "génesis"],
 					["ex", "éx", "exo", "éxodo"],
@@ -540,11 +540,19 @@ export default class BibleLinkerPro extends Plugin {
 					["snt", "sant", "santiago"],
 					["1pe", "1ped", "1pedro"],
 					["2pe", "2ped", "2pedro"],
-					["1jn","1juan"],
-					["2jn","2juan"],
-					["3jn","3juan"],
+					["1jn", "1juan"],
+					["2jn", "2juan"],
+					["3jn", "3juan"],
 					["jud", "judas"],
-					["rev", "ap", "apo", "apoc", "revelación", "revelacion", "apocalipsis"],
+					[
+						"rev",
+						"ap",
+						"apo",
+						"apoc",
+						"revelación",
+						"revelacion",
+						"apocalipsis",
+					],
 				];
 
 				const wtLocaleFI = "FI";
