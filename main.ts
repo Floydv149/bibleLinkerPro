@@ -128,6 +128,7 @@ export default class BibleLinkerPro extends Plugin {
 
 				input = input.trim();
 
+				const wtLocaleEN = "E";
 				const bibleBooksEN = [
 					["ge", "gen", "genesis"],
 					["ex", "exodus"],
@@ -197,6 +198,7 @@ export default class BibleLinkerPro extends Plugin {
 					["re", "rev", "revelation"],
 				];
 
+				const wtLocaleNL = "O";
 				const bibleBooksNL = [
 					["ge", "gen", "genesis"],
 					["ex", "exodus"],
@@ -213,7 +215,7 @@ export default class BibleLinkerPro extends Plugin {
 					["1kr", "1kronieken"],
 					["2kr", "2kronieken"],
 					["ezr", "ezra"],
-					["ne", "nehemiah"],
+					["ne", "nehemia"],
 					["es", "esther"],
 					["job", "job"],
 					["ps", "psalmen", "psalm"],
@@ -266,6 +268,7 @@ export default class BibleLinkerPro extends Plugin {
 					["opb", "openb", "openbaring"],
 				];
 
+				const wtLocaleFR = "F";
 				const bibleBooksFR = [
 					["ge", "gen", "genèse"],
 					["ex", "exode"],
@@ -335,6 +338,7 @@ export default class BibleLinkerPro extends Plugin {
 					["re", "rev", "révélation"],
 				];
 
+				const wtLocalePtBr = "T";
 				const bibleBooksPtBr = [
 					["gên", "gênesis"],
 					["êx", "êxo", "êxodo"],
@@ -404,6 +408,7 @@ export default class BibleLinkerPro extends Plugin {
 					["ap", "apo", "apocalipse"],
 				];
 
+				const wtLocaleDE = "X";
 				const bibleBooksDE = [
 					["1mo", "1mose"],
 					["2mo", "2mose"],
@@ -472,7 +477,7 @@ export default class BibleLinkerPro extends Plugin {
 					["jud", "judas"],
 					["offb", "offenbarung"],
 				];
-
+        
 				const bibleBooksES = [
 					["ge", "gen", "génesis"],
 					["ex", "éx", "exo", "éxodo"],
@@ -542,18 +547,96 @@ export default class BibleLinkerPro extends Plugin {
 					["rev", "ap", "apo", "apoc", "revelación", "revelacion", "apocalipsis"],
 				];
 
+				const wtLocaleFI = "FI";
+				const bibleBooksFI = [
+					["1mo", "1moos", "1mooseksen"],
+					["2mo", "2moos", "2mooseksen"],
+					["3mo", "3moos", "3mooseksen"],
+					["4mo", "4moos", "4mooseksen"],
+					["5mo", "5moos", "5mooseksen"],
+					["jos", "joos", "joosuan"],
+					["tu", "tuom", "tuomarien"],
+					["ru", "ruth", "ruut", "ruutin"],
+					["1sa", "1sam", "1samuelin"],
+					["2sa", "2sam", "2samuelin"],
+					["1ku", "1kun", "1kuninkaiden"],
+					["2ku", "2kun", "2kuninkaiden"],
+					["1ai", "1aik", "1aikakirjan"],
+					["2ai", "2aik", "2aikakirjan"],
+					["esr", "esra", "esran"],
+					["ne", "neh", "nehemian"],
+					["est", "esterin"],
+					["job", "jobin"],
+					["ps", "psalmit", "psalmien"],
+					["san", "sanan", "sananlaskujen"],
+					["sr", "saarn", "saarnajan"],
+					["lal", "laul", "laulujen"],
+					["jes", "jesajan"],
+					["jer", "jeremian"],
+					["va", "valit", "valituslaulut"],
+					["hes", "hesekielin"],
+					["da", "danielin"],
+					["ho", "hoosean"],
+					["jl", "joel", "joelin"],
+					["am", "amos", "amoksen"],
+					["ob", "obadjan"],
+					["jn", "jonan"],
+					["mi", "miik", "miikan"],
+					["na", "nahumin"],
+					["hab", "habakukin"],
+					["sef", "sefanian"],
+					["hag", "haggain"],
+					["sak", "sakarjan"],
+					["mal", "malakian"],
+					["mt", "mat", "matteuksen"],
+					["mr", "mark", "markuksen"],
+					["lu", "luuk", "luukkaan"],
+					["joh", "johanneksen"],
+					["ap", "apt", "apostolien"],
+					["ro", "room", "roomalaisille"],
+					["1ko", "1kor", "1korinttilaisille"],
+					["2ko", "2kor", "2korinttilaisille"],
+					["ga", "gal", "galatalaisille"],
+					["ef", "efesolaisille"],
+					["fil", "filippiläisille"],
+					["kol", "kolossalaisille"],
+					["1te", "1tes", "1tesalonikalaisille"],
+					["2te", "2tes", "2tesalonikalaisille"],
+					["1ti", "1tim", "1timoteukselle"],
+					["2ti", "2tim", "2timoteukselle"],
+					["tit", "titukselle"],
+					["flm", "filemonille"],
+					["hpr", "heprealaisille"],
+					["ja", "jaak", "jaakobin"],
+					["1pi", "1piet", "1pietarin"],
+					["2pi", "2piet", "2pietarin"],
+					["1jo", "1joh", "1johanneksen"],
+					["2jo", "2johanneksen"],
+					["3jo", "3johanneksen"],
+					["ju", "juudaksen"],
+					["il", "ilmestys"],
+				];
+
+				let wtLocale = wtLocaleEN;
 				let bibleBooks = bibleBooksEN;
 
 				if (this.settings.pluginLanguage == "nl") {
+					wtLocale = wtLocaleNL;
 					bibleBooks = bibleBooksNL;
 				} else if (this.settings.pluginLanguage == "fr") {
+					wtLocale = wtLocaleFR;
 					bibleBooks = bibleBooksFR;
 				} else if (this.settings.pluginLanguage == "pt-br") {
+					wtLocale = wtLocalePtBr;
 					bibleBooks = bibleBooksPtBr;
 				} else if (this.settings.pluginLanguage == "de") {
+					wtLocale = wtLocaleDE;
 					bibleBooks = bibleBooksDE;
 				} else if (this.settings.pluginLanguage == "es") {
 					bibleBooks = bibleBooksES;
+				} else if (this.settings.pluginLanguage == "fi") {
+					wtLocale = wtLocaleFI;
+					bibleBooks = bibleBooksFI;
 				}
 
 				let linkOutput = "";
@@ -696,16 +779,11 @@ export default class BibleLinkerPro extends Plugin {
 					renderOutput +
 					this.settings.linkSuffix;
 
-				editor.replaceSelection(
-					"[" +
-						renderOutput +
-						"](jwlibrary:///finder?bible=" +
-						linkOutput +
-						")"
-				);
+				const link = `jwlibrary:///finder?srcid=jwlshare&wtlocale=${wtLocale}&prefer=lang&pub=nwtsty&bible=${linkOutput}`;
+				editor.replaceSelection("[" + renderOutput + "](" + link + ")");
 
 				if (this.settings.autoOpenLink) {
-					window.open("jwlibrary:///finder?bible=" + linkOutput);
+					window.open(link);
 				}
 			} catch (error) {
 				//If an error occurs, replace text with initial input
