@@ -1,5 +1,9 @@
 # Bible linker Pro Changelog
 
+## 1.7.1 - Hotfix
+
+-   Fixed incorrect translation.
+
 ## 1.7.0 - Bug fixes and more languages
 
 -   Fixed broken JW Libary links on Windows by @regapictures
