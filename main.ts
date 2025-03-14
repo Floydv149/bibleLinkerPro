@@ -478,6 +478,7 @@ export default class BibleLinkerPro extends Plugin {
 					["offb", "offenbarung"],
 				];
 
+				const wtLocaleES = "S";
 				const bibleBooksES = [
 					["ge", "gen", "génesis"],
 					["ex", "éx", "exo", "éxodo"],
@@ -641,6 +642,7 @@ export default class BibleLinkerPro extends Plugin {
 					wtLocale = wtLocaleDE;
 					bibleBooks = bibleBooksDE;
 				} else if (this.settings.pluginLanguage == "es") {
+					wtLocale = wtLocaleES;
 					bibleBooks = bibleBooksES;
 				} else if (this.settings.pluginLanguage == "fi") {
 					wtLocale = wtLocaleFI;
