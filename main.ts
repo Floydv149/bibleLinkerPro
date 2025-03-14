@@ -825,7 +825,9 @@ export default class BibleLinkerPro extends Plugin {
 		if (this.currentPluginVersion != this.settings.lastVersion) {
 			this.settings.lastVersion = this.currentPluginVersion;
 			this.saveSettings();
-			new UpdateNotesModal(this.app).open();
+			new UpdateNotesModal(this.app)
+				.receiveVersion(this.currentPluginVersion)
+				.open();
 		}
 	}
 
@@ -887,23 +889,46 @@ class ErrorModal extends Modal {
 class UpdateNotesModal extends Modal {
 	plugin: BibleLinkerPro;
 
+	currentPluginVersion: string;
+
 	constructor(app: App) {
 		super(app);
+	}
+
+	receiveVersion(version: string) {
+		this.currentPluginVersion = version;
+		return this;
 	}
 
 	onOpen() {
 		const { contentEl } = this;
 
 		contentEl.createEl("h2", {
-			text: "New update to Bible linker Pro",
+			text:
+				"🎉 New update for Bible linker Pro (" +
+				this.currentPluginVersion +
+				")",
 		});
 		contentEl.createEl("h3", { text: "What's new?" });
 		contentEl.createEl("p", {
-			text: "-   Added German By @Juilio",
+			text: "-   Fixed broken JW Libary links on Windows by @regapictures",
+		});
+		contentEl.createEl("p", { text: "-   Added Finnish by @amahlaka" });
+		contentEl.createEl("p", {
+			text: "-   Added Spanish by @Marc-Fernandez",
+		});
+		contentEl.createEl("p", {
+			text: "-   Added setting to choose which edition of the Bible you want to use (nwt or nwtsty).",
+		});
+		contentEl.createEl("p", {
+			text: "-   Fixed misspelled Genesis book in French by @DarkBuffalo",
+		});
+		contentEl.createEl("p", {
+			text: "-   Fixed misspelled Daniel book in English by @emir1nemir",
 		});
 
 		const dismisButton = contentEl.createEl("button", {
-			text: "Dismiss",
+			text: "Let's check it out!",
 		});
 		dismisButton.addEventListener("click", () => {
 			this.close();

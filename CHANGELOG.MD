@@ -1,8 +1,17 @@
 # Bible linker Pro Changelog
 
+## 1.7.0 - Bug fixes and more languages
+
+-   Fixed broken JW Libary links on Windows by @regapictures
+-   Added Finnish by @amahlaka
+-   Added Spanish by @Marc-Fernandez
+-   Added setting to choose which edition of the Bible you want to use (nwt or nwtsty).
+-   Fixed misspelled Genesis book in French by @DarkBuffalo
+-   Fixed misspelled Daniel book in English by @emir1nemir
+
 ## 1.6.2 - German
 
--   Added German By @Juilio
+-   Added German by @Juilio
 
 ## 1.6.1 - Hotfix
 
