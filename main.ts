@@ -477,6 +477,75 @@ export default class BibleLinkerPro extends Plugin {
 					["jud", "judas"],
 					["offb", "offenbarung"],
 				];
+        
+				const bibleBooksES = [
+					["ge", "gen", "génesis"],
+					["ex", "éx", "exo", "éxodo"],
+					["le", "lev", "levítico"],
+					["nu", "num", "núm", "números"],
+					["de", "dt", "deut", "deuteronomio"],
+					["jos", "josué"],
+					["jue", "juec", "jueces"],
+					["ru", "rut"],
+					["1sa", "1sam", "1samuel"],
+					["2sa", "2sam", "2samuel"],
+					["1re", "1reyes"],
+					["2re", "2reyes"],
+					["1cr", "1cron", "1crón", "1crónicas"],
+					["2cr", "2cron", "2crón", "2crónicas"],
+					["esd", "esdras"],
+					["ne", "neh", "nehemías"],
+					["est", "ester"],
+					["job", "job"],
+					["sl", "sal", "salmos", "salmo"],
+					["pr", "prov", "proverbios"],
+					["ec", "ecl", "eclesiastés"],
+					["can", "cant", "el cantar de los cantares"],
+					["is", "isa", "isaías"],
+					["jer", "jer", "jeremías"],
+					["lam", "lamentaciones"],
+					["eze", "ezeq", "ezequiel"],
+					["da", "dan", "daniel"],
+					["os", "ose", "hosea"],
+					["joe", "joel"],
+					["am", "amós"],
+					["abd", "abdías"],
+					["jon", "jonás"],
+					["miq", "miqueas"],
+					["na", "nah", "nahúm"],
+					["hab", "habacuc"],
+					["sof", "sofonías"],
+					["ag", "ageo"],
+					["zac", "zacarías"],
+					["mal", "malaquías"],
+					["mt", "mat", "mateo"],
+					["mr", "mar", "marcos"],
+					["lu", "luc", "lucas"],
+					["jn", "juan"],
+					["hch", "hech", "hechos"],
+					["ro", "rom", "romanos"],
+					["1co", "1cor", "1corintios"],
+					["2co", "2cor", "2corintios"],
+					["gal", "gál", "gálatas"],
+					["ef", "efe", "efes", "efesios"],
+					["flp", "fili", "filip", "filipenses"],
+					["col", "colosenses"],
+					["1te", "1tes", "1tesalonicenses"],
+					["2te", "2tes", "2tesalonicenses"],
+					["1ti", "1tim", "1timoteo"],
+					["2ti", "2tim", "2timoteo"],
+					["tit", "tito"],
+					["flm", "file", "filem", "filemón"],
+					["heb", "hebreos"],
+					["snt", "sant", "santiago"],
+					["1pe", "1ped", "1pedro"],
+					["2pe", "2ped", "2pedro"],
+					["1jn","1juan"],
+					["2jn","2juan"],
+					["3jn","3juan"],
+					["jud", "judas"],
+					["rev", "ap", "apo", "apoc", "revelación", "revelacion", "apocalipsis"],
+				];
 
 				const wtLocaleFI = "FI";
 				const bibleBooksFI = [
@@ -563,6 +632,8 @@ export default class BibleLinkerPro extends Plugin {
 				} else if (this.settings.pluginLanguage == "de") {
 					wtLocale = wtLocaleDE;
 					bibleBooks = bibleBooksDE;
+				} else if (this.settings.pluginLanguage == "es") {
+					bibleBooks = bibleBooksES;
 				} else if (this.settings.pluginLanguage == "fi") {
 					wtLocale = wtLocaleFI;
 					bibleBooks = bibleBooksFI;
