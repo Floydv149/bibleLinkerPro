@@ -8,13 +8,9 @@ This is an Obsidian plugin for converting Bible texts to links in markdown.
 
 Converts a Bible text to a JW Library link, directly replacing your text.
 
-E.g.
+For example:
 
-ge 1:1
-
-=>
-
-`[Genesis 1:1](jwlibrary:///finder?bible=01001001)`
+"ge 1:1" converts to `[Genesis 1:1](jwlibrary:///finder?srcid=jwlshare&wtlocale=O&prefer=lang&pub=nwtsty&bible=01001001)`
 
 ### Processing
 
@@ -23,6 +19,7 @@ While processing your text, you have some extra options:
 -   Expand the Bible book name from abbreviation to full name.
 -   Automaticaly get the current line when using the command.
 -   Automatically open the newly generated link.
+-   Choose your preferred Bible edition (nwt or nwtsty).
 
 ### Styling
 
@@ -42,6 +39,8 @@ This plugin converts the following languages:
 -   French (100%) - By @DarkBuffalo
 -   Portuguese from Brasil (100%) - By @gutembergmaciel
 -   German (100%) - By @Juilio
+-   Finnish - By @amahlaka
+-   Spanish - By @Marc-Fernandez
 
 ## Changelog
 
