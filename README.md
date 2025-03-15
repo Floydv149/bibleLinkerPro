@@ -32,13 +32,13 @@ The links you generate with this plugin can be styled with the following options
 
 ### Multiple language support
 
-This plugin converts the following languages:
+This plugin supports the following languages:
 
--   English (100%)
--   Dutch (100%)
--   French (100%) - By @DarkBuffalo
+-   English
+-   Dutch
+-   French - By @DarkBuffalo
 -   Portuguese from Brasil (100%) - By @gutembergmaciel
--   German (100%) - By @Juilio
+-   German - By @Juilio
 -   Finnish - By @amahlaka
 -   Spanish - By @Marc-Fernandez
 
