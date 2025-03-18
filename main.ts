@@ -641,8 +641,22 @@ export default class BibleLinkerPro extends Plugin {
 					["2см", "2сам", "2цар", "2самуїла"],
 					["1цр", "1цар", "3цар", "1царів"],
 					["2цр", "2цар", "4цар", "2царів"],
-					["1п", "1хр", "1пар", "1хронік", "1хроніки", "1паралипоменон"],
-					["2п", "2хр", "2пар", "2хронік", "2хроніки", "2паралипоменон"],
+					[
+						"1п",
+						"1хр",
+						"1пар",
+						"1хронік",
+						"1хроніки",
+						"1паралипоменон",
+					],
+					[
+						"2п",
+						"2хр",
+						"2пар",
+						"2хронік",
+						"2хроніки",
+						"2паралипоменон",
+					],
 					["езд", "єзд", "ездра"],
 					["не", "нем", "неєм", "неємія"],
 					["ес", "ест", "естер", "есфір"],
@@ -650,7 +664,13 @@ export default class BibleLinkerPro extends Plugin {
 					["пс", "псалом", "псалми"],
 					["пр", "прип", "притчі", "приповісті"],
 					["ек", "екл", "еккл", "екклезіаста"],
-					["псн", "пісн", "пісня", "пісня пісень", "пісня над піснями"],
+					[
+						"псн",
+						"пісн",
+						"пісня",
+						"пісня пісень",
+						"пісня над піснями",
+					],
 					["іс", "ісая", "ісаї"],
 					["єр", "єрем", "єремія"],
 					["пл", "плач", "плач єремії"],
@@ -694,7 +714,7 @@ export default class BibleLinkerPro extends Plugin {
 					["2ів", "2йн", "2івана", "2йоана"],
 					["3ів", "3йн", "3івана", "3йоана"],
 					["юд", "юди", "юда"],
-					["об", "обявл", "одкровення", "об'явлення"]
+					["об", "обявл", "одкровення", "об'явлення"],
 				];
 
 				let wtLocale = wtLocaleEN;
@@ -983,20 +1003,10 @@ class UpdateNotesModal extends Modal {
 		});
 		contentEl.createEl("h3", { text: "What's new?" });
 		contentEl.createEl("p", {
-			text: "-   Fixed broken JW Libary links on Windows by @regapictures",
-		});
-		contentEl.createEl("p", { text: "-   Added Finnish by @amahlaka" });
-		contentEl.createEl("p", {
-			text: "-   Added Spanish by @Marc-Fernandez",
+			text: "- Added Ukrainian by @gaborishka",
 		});
 		contentEl.createEl("p", {
-			text: "-   Added setting to choose which edition of the Bible you want to use (nwt or nwtsty).",
-		});
-		contentEl.createEl("p", {
-			text: "-   Fixed misspelled Genesis book in French by @DarkBuffalo",
-		});
-		contentEl.createEl("p", {
-			text: "-   Fixed misspelled Daniel book in English by @emir1nemir",
+			text: "- Fixed grammar on Finnish translations by @amahlaka",
 		});
 
 		const dismisButton = contentEl.createEl("button", {

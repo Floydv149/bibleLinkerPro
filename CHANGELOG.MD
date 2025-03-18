@@ -1,5 +1,10 @@
 # Bible linker Pro Changelog
 
+## 1.7.2 - Ukrainian language added + Finnish grammar fix
+
+-   Added Ukrainian by @gaborishka
+-   Fixed grammar on Finnish translations by @amahlaka
+
 ## 1.7.1 - Hotfix
 
 -   Fixed incorrect translation.
