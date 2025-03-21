@@ -53,6 +53,7 @@ export default class BibleLinkerPro extends Plugin {
 	//Set current plugin version
 	currentPluginVersion = this.manifest.version;
 
+	//Function to get a translation of a given key if available in the selected language
 	getTranslation(key: string) {
 		const langBase = this.getLangBase();
 		const attemptTranslating =
@@ -88,12 +89,6 @@ export default class BibleLinkerPro extends Plugin {
 
 		await this.saveSettings();
 
-		// this.registerView(VIEW_TYPE_EXAMPLE, (leaf) => new ExampleView(leaf));
-
-		// this.addRibbonIcon("canvas", "Activate view", () => {
-		// 	this.activateView();
-		// });
-
 		const errorModal = new ErrorModal(this.app);
 
 		this.registerEvent(
@@ -104,17 +99,14 @@ export default class BibleLinkerPro extends Plugin {
 						item.setTitle("Convert Bible text to JW Library link")
 							.setIcon("link")
 							.onClick(async () => {
-								convertBibleTextToJWLibraryLink(editor, view);
+								convertBibleTextToJWLibraryLink(editor);
 							});
 					});
 				}
 			)
 		);
 
-		const convertBibleTextToJWLibraryLink = (
-			editor: Editor,
-			view: MarkdownView
-		) => {
+		const convertBibleTextToJWLibraryLink = (editor: Editor) => {
 			let input;
 			try {
 				if (this.settings.autoGetLine) {
@@ -627,6 +619,7 @@ export default class BibleLinkerPro extends Plugin {
 					["ju", "juudaksen"],
 					["il", "ilmestys"],
 				];
+
 				const wtLocaleUA = "K";
 				const bibleBooksUA = [
 					["бт", "бут", "буття"],
@@ -720,27 +713,35 @@ export default class BibleLinkerPro extends Plugin {
 				let wtLocale = wtLocaleEN;
 				let bibleBooks = bibleBooksEN;
 
-				if (this.settings.pluginLanguage == "nl") {
-					wtLocale = wtLocaleNL;
-					bibleBooks = bibleBooksNL;
-				} else if (this.settings.pluginLanguage == "fr") {
-					wtLocale = wtLocaleFR;
-					bibleBooks = bibleBooksFR;
-				} else if (this.settings.pluginLanguage == "pt-br") {
-					wtLocale = wtLocalePtBr;
-					bibleBooks = bibleBooksPtBr;
-				} else if (this.settings.pluginLanguage == "de") {
-					wtLocale = wtLocaleDE;
-					bibleBooks = bibleBooksDE;
-				} else if (this.settings.pluginLanguage == "es") {
-					wtLocale = wtLocaleES;
-					bibleBooks = bibleBooksES;
-				} else if (this.settings.pluginLanguage == "fi") {
-					wtLocale = wtLocaleFI;
-					bibleBooks = bibleBooksFI;
-				} else if (this.settings.pluginLanguage == "ua") {
-					wtLocale = wtLocaleUA;
-					bibleBooks = bibleBooksUA;
+				switch (this.settings.pluginLanguage) {
+					case "nl":
+						wtLocale = wtLocaleNL;
+						bibleBooks = bibleBooksNL;
+						break;
+					case "fr":
+						wtLocale = wtLocaleFR;
+						bibleBooks = bibleBooksFR;
+						break;
+					case "pt-br":
+						wtLocale = wtLocalePtBr;
+						bibleBooks = bibleBooksPtBr;
+						break;
+					case "de":
+						wtLocale = wtLocaleDE;
+						bibleBooks = bibleBooksDE;
+						break;
+					case "es":
+						wtLocale = wtLocaleES;
+						bibleBooks = bibleBooksES;
+						break;
+					case "fi":
+						wtLocale = wtLocaleFI;
+						bibleBooks = bibleBooksFI;
+						break;
+					case "ua":
+						wtLocale = wtLocaleUA;
+						bibleBooks = bibleBooksUA;
+						break;
 				}
 
 				let linkOutput = "";
@@ -901,16 +902,16 @@ export default class BibleLinkerPro extends Plugin {
 			}
 		};
 
-		// This adds an editor command that can perform some operation on the current editor instance
+		//Add editor command that can perform some operation on the current editor instance
 		this.addCommand({
 			id: "convert-Bible-text-to-JW-Library-link",
 			name: "Convert Bible text to JW Library link",
 			editorCallback: (editor: Editor, view: MarkdownView) => {
-				convertBibleTextToJWLibraryLink(editor, view);
+				convertBibleTextToJWLibraryLink(editor);
 			},
 		});
 
-		// This adds a settings tab so the user can configure various aspects of the plugin
+		//Add a settings tab so the user can configure plugin settings
 		this.addSettingTab(new MainSettingTab(this.app, this));
 
 		//Update notes modal
@@ -924,24 +925,6 @@ export default class BibleLinkerPro extends Plugin {
 	}
 
 	onunload() {}
-
-	// async activateView() {
-	// 	const { workspace } = this.app;
-
-	// 	let leaf: WorkspaceLeaf | null = null;
-	// 	const leaves = workspace.getLeavesOfType(VIEW_TYPE_EXAMPLE);
-
-	// 	if (leaves.length > 0) {
-	// 		// A leaf with our view already exists, use that
-	// 		leaf = leaves[0];
-	// 	} else {
-	// 		// Our view could not be found in the workspace, create a new leaf
-	// 		// in the right sidebar for it
-	// 		leaf = workspace.getRightLeaf(false);
-	// 		await leaf.setViewState({ type: VIEW_TYPE_EXAMPLE, active: true });
-	// 	}
-	// 	workspace.revealLeaf(leaf);
-	// }
 
 	async loadSettings() {
 		this.settings = Object.assign(
@@ -1001,13 +984,24 @@ class UpdateNotesModal extends Modal {
 				this.currentPluginVersion +
 				")",
 		});
+		contentEl.createEl("br");
 		contentEl.createEl("h3", { text: "What's new?" });
-		contentEl.createEl("p", {
-			text: "- Added Ukrainian by @gaborishka",
-		});
-		contentEl.createEl("p", {
-			text: "- Fixed grammar on Finnish translations by @amahlaka",
-		});
+
+		//Changelog
+		const splashScreenText = `
+		-   Added Ukrainian by @gaborishka
+		-   Fixed grammar on Finnish translations by @amahlaka`;
+		const splayScreenList = splashScreenText.split("\n");
+
+		for (let i = 0; i < splayScreenList.length; i++) {
+			if (splayScreenList[i] != "") {
+				contentEl.createEl("p", {
+					text: splayScreenList[i],
+				});
+			}
+		}
+
+		contentEl.createEl("hr");
 
 		const dismisButton = contentEl.createEl("button", {
 			text: "Let's check it out!",
