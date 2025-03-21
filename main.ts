@@ -627,7 +627,7 @@ export default class BibleLinkerPro extends Plugin {
 					["ju", "juudaksen"],
 					["il", "ilmestys"],
 				];
-				const wtLocaleUA = "UA";
+				const wtLocaleUA = "K";
 				const bibleBooksUA = [
 					["бт", "бут", "буття"],
 					["вх", "вих", "вихід"],
