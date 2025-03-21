@@ -1,5 +1,9 @@
 # Bible linker Pro Changelog
 
+## 1.7.3 - Ukrainian hotfix
+
+-   Fixed wtLocale for Ukrainian language by @gaborishka
+
 ## 1.7.2 - Ukrainian language added + Finnish grammar fix
 
 -   Added Ukrainian by @gaborishka

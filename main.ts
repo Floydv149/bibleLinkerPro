@@ -984,13 +984,13 @@ class UpdateNotesModal extends Modal {
 				this.currentPluginVersion +
 				")",
 		});
-		contentEl.createEl("br");
 		contentEl.createEl("h3", { text: "What's new?" });
+		contentEl.createEl("br");
 
 		//Changelog
 		const splashScreenText = `
-		-   Added Ukrainian by @gaborishka
-		-   Fixed grammar on Finnish translations by @amahlaka`;
+		-   Fixed wtLocale for Ukrainian language by @gaborishka
+		`;
 		const splayScreenList = splashScreenText.split("\n");
 
 		for (let i = 0; i < splayScreenList.length; i++) {
@@ -1001,7 +1001,8 @@ class UpdateNotesModal extends Modal {
 			}
 		}
 
-		contentEl.createEl("hr");
+		contentEl.createEl("br");
+		contentEl.createEl("br");
 
 		const dismisButton = contentEl.createEl("button", {
 			text: "Let's check it out!",
