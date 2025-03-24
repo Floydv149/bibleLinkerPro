@@ -710,6 +710,76 @@ export default class BibleLinkerPro extends Plugin {
 					["об", "обявл", "одкровення", "об'явлення"],
 				];
 
+				const wtLocaleHU = "H"; // Replace "M" with the correct code
+				const bibleBooksHU = [
+					["1mó", "1móz", "1Mózes"],
+					["2mó", "2móz", "2Mózes"],
+					["3mó", "3móz", "3Mózes"],
+					["4mó", "4móz", "4Mózes"],
+					["5mó", "5móz", "5Mózes"],
+					["jzs", "józs", "Józsué"],
+					["bí", "bír", "Bírák"],
+					["ruth", "ruth", "Ruth"],
+					["1sá", "1sám", "1Sámuel"],
+					["2sá", "2sám", "2Sámuel"],
+					["1ki", "1kir", "1Királyok"],
+					["2ki", "2kir", "2Királyok"],
+					["1kr", "1krón", "1Krónikák"],
+					["2kr", "2krón", "2Krónikák"],
+					["ezs", "ezsdr", "Ezsdrás"],
+					["neh", "neh", "Nehémiás"],
+					["esz", "eszt", "Eszter"],
+					["jób", "jób", "Jób"],
+					["zsolt", "zsolt", "Zsoltárok"],
+					["pl", "péld", "Példabeszédek"],
+					["pr", "préd", "Prédikátor"],
+					["ének", "ének", "Énekek éneke"],
+					["ézs", "ézsai", "Ézsaiás"],
+					["jr", "jer", "Jeremiás"],
+					["sir", "siral", "Siralmak"],
+					["ez", "ezék", "Ezékiel"],
+					["dán", "dán", "Dániel"],
+					["hós", "hós", "Hóseás"],
+					["jóe", "jóel", "Jóel"],
+					["ám", "ámós", "Ámós"],
+					["ab", "abd", "Abdiás"],
+					["jón", "jón", "Jónás"],
+					["mik", "mik", "Mikeás"],
+					["náh", "náh", "Náhum"],
+					["hab", "hab", "Habakuk"],
+					["so", "sof", "Sofóniás"],
+					["ag", "agg", "Aggeus"],
+					["zak", "zak", "Zakariás"],
+					["mal", "mal", "Malakiás"],
+					["mát", "mát", "Máté"],
+					["márk", "márk", "Márk"],
+					["luk", "luk", "Lukács"],
+					["ján", "ján", "János"],
+					["csel", "csel", "Cselekedetek"],
+					["róm", "róm", "Róma"],
+					["1kor", "1kor", "1Korintusz"],
+					["2kor", "2kor", "2Korintusz"],
+					["ga", "gal", "Galácia"],
+					["ef", "ef", "Efézus"],
+					["flp", "fil", "Filippi"],
+					["kol", "kol", "Kolosszé"],
+					["1tesz", "1tesz", "1Tesszalonika"],
+					["2tesz", "2tesz", "2Tesszalonika"],
+					["1tim", "1tim", "1Timóteusz"],
+					["2tim", "2tim", "2Timóteusz"],
+					["tit", "tit", "Titusz"],
+					["flm", "filem", "Filemon"],
+					["héb", "héb", "Hébereknek"],
+					["jk", "jak", "Jakab"],
+					["1pt", "1pét", "1Péter"],
+					["2pt", "2pét", "2Péter"],
+					["1jn", "1ján", "1János"],
+					["2jn", "2ján", "2János"],
+					["3jn", "3ján", "3János"],
+					["júd", "júd", "Júdás"],
+					["jel", "jel", "Jelenések"],
+				];
+
 				let wtLocale = wtLocaleEN;
 				let bibleBooks = bibleBooksEN;
 
@@ -737,6 +807,10 @@ export default class BibleLinkerPro extends Plugin {
 					case "fi":
 						wtLocale = wtLocaleFI;
 						bibleBooks = bibleBooksFI;
+						break;
+					case "hu":
+						wtLocale = wtLocaleHU;
+						bibleBooks = bibleBooksHU;
 						break;
 					case "ua":
 						wtLocale = wtLocaleUA;
