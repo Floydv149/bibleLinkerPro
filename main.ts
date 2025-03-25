@@ -102,8 +102,8 @@ export default class BibleLinkerPro extends Plugin {
 								convertBibleTextToJWLibraryLink(editor);
 							});
 					});
-				}
-			)
+				},
+			),
 		);
 
 		const convertBibleTextToJWLibraryLink = (editor: Editor) => {
@@ -769,6 +769,17 @@ export default class BibleLinkerPro extends Plugin {
 					}
 				}
 
+				if (bibleBookLong == undefined) {
+					//If an error occurs, replace text with initial input
+					if (input != null) {
+						editor.replaceSelection(input);
+					}
+
+					errorModal.setText(this.getTranslation("INVALID_INPUT"));
+					errorModal.open();
+					return;
+				}
+
 				let chapter = input.split(" ")[1];
 				chapter = chapter.split(":")[0];
 				if (chapter.length == 1) {
@@ -930,7 +941,7 @@ export default class BibleLinkerPro extends Plugin {
 		this.settings = Object.assign(
 			{},
 			DEFAULT_SETTINGS,
-			await this.loadData()
+			await this.loadData(),
 		);
 	}
 
