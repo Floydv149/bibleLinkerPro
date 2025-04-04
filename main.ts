@@ -1179,15 +1179,22 @@ class UpdateNotesModal extends Modal {
 
 		//Changelog
 		const splashScreenText = `
-		-   Fixed wtLocale for Ukrainian language by @gaborishka
+		-   Added new command "Open Bible text in JW Library" to only open the Bible text without replacing text in the editor.
+-   Added Portuguese (Portugal) by @joao-p-marques
+-   Added Hungarian by @MGeri97
+-   When a Bible text is not recognized, it keeps the original content instead of replacing it with "Undefined" by @xrtxn
+-   Improved visual of splash screen
 		`;
-		const splayScreenList = splashScreenText.split("\n");
+		const splayScreenList = splashScreenText
+			.replace(/-   /g, "")
+			.split("\n");
 
 		for (let i = 0; i < splayScreenList.length; i++) {
-			if (splayScreenList[i] != "") {
-				contentEl.createEl("p", {
+			if (splayScreenList[i].length > 2) {
+				contentEl.createEl("li", {
 					text: splayScreenList[i],
 				});
+				contentEl.createEl("br");
 			}
 		}
 
