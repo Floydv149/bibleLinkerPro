@@ -21,7 +21,7 @@ Bible linker Pro is a plugin for [Obsidian](https://obsidian.md/) that let's you
 
 ## Installation
 
-> [!Note] Info
+> [!Note]  
 > You must turn off **Restricted mode** to use this plugin.
 
 1. In Obsidian, open **Settings**.
@@ -82,3 +82,7 @@ This plugin supports the following languages:
 -   Support to convert to WOL links.
 -   More error messages
 -   More languages
+
+## License
+
+Projects is distributed under [Apache License 2.0](LICENSE).
