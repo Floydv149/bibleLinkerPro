@@ -99,14 +99,32 @@ export default class BibleLinkerPro extends Plugin {
 						item.setTitle("Convert Bible text to JW Library link")
 							.setIcon("link")
 							.onClick(async () => {
-								convertBibleTextToJWLibraryLink(editor);
+								convertBibleTextToJWLibraryLink(editor, true);
 							});
 					});
-				},
-			),
+				}
+			)
 		);
 
-		const convertBibleTextToJWLibraryLink = (editor: Editor) => {
+		this.registerEvent(
+			this.app.workspace.on(
+				"editor-menu",
+				(menu, editor, view: MarkdownView) => {
+					menu.addItem((item) => {
+						item.setTitle("Open Bible text in JW Library")
+							.setIcon("link")
+							.onClick(async () => {
+								convertBibleTextToJWLibraryLink(editor, false);
+							});
+					});
+				}
+			)
+		);
+
+		const convertBibleTextToJWLibraryLink = (
+			editor: Editor,
+			replaceText: boolean
+		) => {
 			let input;
 			try {
 				if (this.settings.autoGetLine) {
@@ -779,7 +797,7 @@ export default class BibleLinkerPro extends Plugin {
 					["юд", "юди", "юда"],
 					["об", "обявл", "одкровення", "об'явлення"],
 				];
-				
+
 				const wtLocaleHU = "H";
 				const bibleBooksHU = [
 					["1mó", "1mo", "1mózes"],
@@ -797,12 +815,12 @@ export default class BibleLinkerPro extends Plugin {
 					["1kr", "1kron", "1krónikák"],
 					["2kr", "2kron", "2krónikák"],
 					["ezs", "ezsdr", "ezsdrás"],
-					["ne","neh", "nehémiás"],
-					["esz","eszt", "eszter"],
-					["jób","job", "jób"],
+					["ne", "neh", "nehémiás"],
+					["esz", "eszt", "eszter"],
+					["jób", "job", "jób"],
 					["zs", "zsolt", "zsoltárok"],
 					["pl", "peld", "példabeszédek"],
-					["pr","pred", "prédikátor"],
+					["pr", "pred", "prédikátor"],
 					["én", "enek", "énekek éneke"],
 					["ézs", "ezsai", "ézsaiás"],
 					["jr", "jer", "jeremiás"],
@@ -817,7 +835,7 @@ export default class BibleLinkerPro extends Plugin {
 					["mi", "mike", "mikeás"],
 					["ná", "nah", "náhum"],
 					["ha", "hab", "habakuk"],
-					["so","sof", "sofóniás"],
+					["so", "sof", "sofóniás"],
 					["ag", "agg", "aggeus"],
 					["za", "zak", "zakariás"],
 					["ma", "mal", "malakiás"],
@@ -827,27 +845,27 @@ export default class BibleLinkerPro extends Plugin {
 					["jn", "ján", "jános"],
 					["cs", "csel", "cselekedetek"],
 					["ró", "rom", "róma"],
-					["1ko","1kor", "1korintusz"],
+					["1ko", "1kor", "1korintusz"],
 					["2ko", "2kor", "2korintusz"],
 					["ga", "gal", "galácia"],
-					["ef", "efez","efézus"],
+					["ef", "efez", "efézus"],
 					["flp", "filip", "filippi"],
 					["kol", "kolosz", "kolosszé"],
-					["1te","1tesz", "1tesszalonika"],
+					["1te", "1tesz", "1tesszalonika"],
 					["2te", "2tesz", "2tesszalonika"],
-					["1tim","1timo", "1timóteusz"],
-					["2tim","2timo", "2timóteusz"],
+					["1tim", "1timo", "1timóteusz"],
+					["2tim", "2timo", "2timóteusz"],
 					["tit", "titu", "titusz"],
 					["flm", "filem", "filemon"],
 					["héb", "heb", "héberek"],
-					["jk","jak", "jakab"],
+					["jk", "jak", "jakab"],
 					["1pt", "1pet", "1péter"],
 					["2pt", "2pet", "2péter"],
 					["1jn", "1jan", "1jános"],
 					["2jn", "2jan", "2jános"],
 					["3jn", "3jan", "3jános"],
 					["júd", "júdás"],
-					["jel","jelen", "jelenések"]
+					["jel", "jelen", "jelenések"],
 				];
 
 				let wtLocale = wtLocaleEN;
@@ -1044,9 +1062,14 @@ export default class BibleLinkerPro extends Plugin {
 					this.settings.linkSuffix;
 
 				const link = `jwlibrary:///finder?srcid=jwlshare&wtlocale=${wtLocale}&prefer=lang&pub=${this.settings.bibleEdition}&bible=${linkOutput}`;
-				editor.replaceSelection("[" + renderOutput + "](" + link + ")");
 
-				if (this.settings.autoOpenLink) {
+				if (replaceText) {
+					editor.replaceSelection(
+						"[" + renderOutput + "](" + link + ")"
+					);
+				}
+
+				if (this.settings.autoOpenLink || !replaceText) {
 					window.open(link);
 				}
 			} catch (error) {
@@ -1061,12 +1084,20 @@ export default class BibleLinkerPro extends Plugin {
 			}
 		};
 
-		//Add editor command that can perform some operation on the current editor instance
+		//Add editor commands
 		this.addCommand({
 			id: "convert-Bible-text-to-JW-Library-link",
 			name: "Convert Bible text to JW Library link",
 			editorCallback: (editor: Editor, view: MarkdownView) => {
-				convertBibleTextToJWLibraryLink(editor);
+				convertBibleTextToJWLibraryLink(editor, true);
+			},
+		});
+
+		this.addCommand({
+			id: "open-Bible-text-in-JW-Library",
+			name: "Open Bible text in JW Library",
+			editorCallback: (editor: Editor, view: MarkdownView) => {
+				convertBibleTextToJWLibraryLink(editor, false);
 			},
 		});
 
@@ -1089,7 +1120,7 @@ export default class BibleLinkerPro extends Plugin {
 		this.settings = Object.assign(
 			{},
 			DEFAULT_SETTINGS,
-			await this.loadData(),
+			await this.loadData()
 		);
 	}
 
